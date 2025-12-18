@@ -1,0 +1,43 @@
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  width: fit-content;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  animation: bubblePulse 1.6s ease-in-out infinite;
+}
+
+.typing-indicator span {
+  width: 5px;
+  height: 5px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 50%;
+
+  animation: blink 1.4s infinite ease-in-out;
+  transform-origin: center;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes blink {
+  0% { opacity: 0.3; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-2px); }
+  100% { opacity: 0.3; transform: translateY(0); }
+}
+
+@keyframes bubblePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+  100% { transform: scale(1); }
+}
