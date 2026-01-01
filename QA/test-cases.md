@@ -64,8 +64,7 @@
 | **ID**                 | TC-02                                                              |
 | **Descripción**        | Verificar que el usuario pueda enviar una respuesta por el chatbox |
 | **Precondición**       | Chatbox iniciado                                                   |
-| **Pasos**              | 1. Escribir una respuesta                                          |
-                         | 2. Presionar enviar                                                |
+| **Pasos**              | 1. Escribir una respuesta, 2. Presionar enviar                     | 
 | **Resultado esperado** | El mensaje del usuario se muestra                                  |
 | **Resultado real**     | Pendiente                                                          |
 | **Estado**             | No ejecutado                                                       |
