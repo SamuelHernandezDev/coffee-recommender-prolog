@@ -7,7 +7,7 @@ import questionsIntermediate from "../data/questionsIntermediate";
 import questionsExpert from "../data/questionsExpert";
 
 // Hook del backend Prolog
-import usePrologApi from "../hooks/usePrologAPI";
+import usePrologApi from "./usePrologAPI";
 
 export default function useChatFlow() {
   const {
