@@ -70,7 +70,7 @@
 | **Actual Result**      | Pendiente                                                                             |
 | **Status**             | Not Executed                                                                          |
 | **Severity**           | Medium                                                                                |
-
+| **Nota**               |                                                                                       |
 
 ---
 
@@ -86,6 +86,7 @@
 | **Actual Result**      | Pendiente                                                             |
 | **Status**             | Not Executed                                                          |
 | **Severity**           | High                                                                  |
+| **Nota**               |                                                                       |
 
 ---
 
@@ -101,6 +102,7 @@
 | **Actual Result**      | Pendiente                                                             |
 | **Status**             | Not Executed                                                          |
 | **Severity**           | Critical                                                              |
+| **Nota**               |                                                                       |
 
 ---
 
