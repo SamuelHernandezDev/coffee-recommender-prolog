@@ -44,16 +44,17 @@
 
 ### TC-01 – Inicio correcto del chatbox
 
-| Campo                  | Detalle                                                                   |
-| ---------------------- | ------------------------------------------------------------------------- |
-| **ID**                 | TC-01                                                                     |
-| **Descripción**        | Verificar que el chatbox se muestre correctamente al cargar la aplicación |
-| **Precondición**       | Aplicación desplegada y accesible                                         |
-| **Pasos**              | 1. Abrir la aplicación web                                                |
-| **Resultado esperado** | El chatbox aparece visible y listo para interacción                       |
-| **Resultado real**     | Pendiente                                                                 |
-| **Estado**             | No ejecutado                                                              |
-| **Severidad**          | Alta                                                                      |
+| Campo                  | Detalle                                                                                                       |
+| ---------------------- | --------------------------------------------------------------------------------------------------------------|
+| **ID**                 | TC-01                                                                                                         |
+| **Descripción**        | Verificar que el chatbox se muestre correctamente al cargar la aplicación                                     |
+| **Precondición**       | Aplicación ejecutándose en localhost                                                                          |
+| **Pasos**              | 1. Abrir la aplicación web                                                                                    |
+| **Expected Result**    | The chatbox is visible and ready for interaction                                                              |
+| **Actual Result**      | Pendiente                                                                                                     |
+| **Status**             | Not Executed                                                                                                  |
+| **Severity**           | High                                                                                                          |
+| **Nota**               |                                                                                                               |
 
 ---
 
@@ -65,10 +66,10 @@
 | **Descripción**        | Verificar que el usuario pueda seleccionar una opción de respuesta                    |
 | **Precondición**       | Chatbox iniciado y pregunta visible                                                   |
 | **Pasos**              | 1. Visualizar las opciones mostradas 2. Seleccionar una opción                        |
-| **Resultado esperado** | La opción seleccionada se muestra como mensaje del usuario y se envía automáticamente |
-| **Resultado real**     | Pendiente                                                                             |
-| **Estado**             | No ejecutado                                                                          |
-| **Severidad**          | Media                                                                                 |
+| **Expected Result**    | The selected option is displayed as a user message and sent automatically             |
+| **Actual Result**      | Pendiente                                                                             |
+| **Status**             | Not Executed                                                                          |
+| **Severity**           | Medium                                                                                |
 
 
 ---
@@ -81,25 +82,25 @@
 | **Descripción**        | Validar que el sistema envíe la siguiente pregunta tras una respuesta |
 | **Precondición**       | Respuesta enviada                                                     |
 | **Pasos**              | 1. Enviar respuesta válida                                            |
-| **Resultado esperado** | El sistema responde con una nueva pregunta                            |
-| **Resultado real**     | Pendiente                                                             |
-| **Estado**             | No ejecutado                                                          |
-| **Severidad**          | Alta                                                                  |
+| **Expected Result**    | The system displays the next question in the chatbox                  |
+| **Actual Result**      | Pendiente                                                             |
+| **Status**             | Not Executed                                                          |
+| **Severity**           | High                                                                  |
 
 ---
 
 ### TC-04 – Flujo completo de recomendación
 
-| Campo                  | Detalle                                                 |
-| ---------------------- | ------------------------------------------------------- |
-| **ID**                 | TC-04                                                   |
-| **Descripción**        | Verificar que el sistema genere una recomendación final |
-| **Precondición**       | Usuario responde todas las preguntas                    |
-| **Pasos**              | 1. Responder todas las preguntas del chat               |
-| **Resultado esperado** | El sistema muestra una recomendación de café            |
-| **Resultado real**     | Pendiente                                               |
-| **Estado**             | No ejecutado                                            |
-| **Severidad**          | Crítica                                                 |
+| Campo                  | Detalle                                                               |
+| ---------------------- | ----------------------------------------------------------------------|
+| **ID**                 | TC-04                                                                 |
+| **Descripción**        | Verificar que el sistema genere una recomendación final               |
+| **Precondición**       | Usuario responde todas las preguntas                                  |
+| **Pasos**              | 1. Responder todas las preguntas del chat                             |
+| **Expected Result**    | The system displays a coffee recommendation with name and description |
+| **Actual Result**      | Pendiente                                                             |
+| **Status**             | Not Executed                                                          |
+| **Severity**           | Critical                                                              |
 
 ---
 
@@ -108,3 +109,4 @@
 * Estos test cases serán actualizados conforme se agreguen nuevas funcionalidades.
 * Los resultados reales se llenarán durante la ejecución de pruebas.
 * Los defectos encontrados se documentarán mediante GitHub Issues.
+* Las mejoras de UX o funcionalidades faltantes se documentarán como Enhancements, no como bugs.
