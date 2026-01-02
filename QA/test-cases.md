@@ -57,18 +57,19 @@
 
 ---
 
-### TC-02 – Envío de respuesta del usuario
+### TC-02 – Selección de respuesta del usuario
 
-| Campo                  | Detalle                                                            |
-| -----------------------| ------------------------------------------------------------------ |
-| **ID**                 | TC-02                                                              |
-| **Descripción**        | Verificar que el usuario pueda enviar una respuesta por el chatbox |
-| **Precondición**       | Chatbox iniciado                                                   |
-| **Pasos**              | 1. Escribir una respuesta, 2. Presionar enviar                     | 
-| **Resultado esperado** | El mensaje del usuario se muestra                                  |
-| **Resultado real**     | Pendiente                                                          |
-| **Estado**             | No ejecutado                                                       |
-| **Severidad**          | Media                                                              |
+| Campo                  | Detalle                                                                               |
+| ---------------------- | --------------------------------------------------------------------------------------|
+| **ID**                 | TC-02                                                                                 |
+| **Descripción**        | Verificar que el usuario pueda seleccionar una opción de respuesta                    |
+| **Precondición**       | Chatbox iniciado y pregunta visible                                                   |
+| **Pasos**              | 1. Visualizar las opciones mostradas 2. Seleccionar una opción                        |
+| **Resultado esperado** | La opción seleccionada se muestra como mensaje del usuario y se envía automáticamente |
+| **Resultado real**     | Pendiente                                                                             |
+| **Estado**             | No ejecutado                                                                          |
+| **Severidad**          | Media                                                                                 |
+
 
 ---
 
@@ -99,21 +100,6 @@
 | **Resultado real**     | Pendiente                                               |
 | **Estado**             | No ejecutado                                            |
 | **Severidad**          | Crítica                                                 |
-
----
-
-### TC-05 – Manejo de respuesta inválida
-
-| Campo                  | Detalle                                                    |
-| ---------------------- | ---------------------------------------------------------- |
-| **ID**                 | TC-05                                                      |
-| **Descripción**        | Validar el comportamiento ante una respuesta no esperada   |
-| **Precondición**       | Chat activo                                                |
-| **Pasos**              | 1. Ingresar texto inválido                                 |
-| **Resultado esperado** | El sistema solicita una respuesta válida o maneja el error |
-| **Resultado real**     | Pendiente                                                  |
-| **Estado**             | No ejecutado                                               |
-| **Severidad**          | Media                                                      |
 
 ---
 
