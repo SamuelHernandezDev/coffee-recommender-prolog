@@ -44,65 +44,65 @@
 
 ### TC-01 – Inicio correcto del chatbox
 
-| Campo                  | Detalle                                                                                                       |
-| ---------------------- | --------------------------------------------------------------------------------------------------------------|
-| **ID**                 | TC-01                                                                                                         |
-| **Descripción**        | Verificar que el chatbox se muestre correctamente al cargar la aplicación                                     |
-| **Precondición**       | Aplicación ejecutándose en localhost                                                                          |
-| **Pasos**              | 1. Abrir la aplicación web                                                                                    |
-| **Expected Result**    | The chatbox is visible and ready for interaction                                                              |
-| **Actual Result**      | Pendiente                                                                                                     |
-| **Status**             | Not Executed                                                                                                  |
-| **Severity**           | High                                                                                                          |
-| **Nota**               |                                                                                                               |
+| Campo                  | Detalle                                                                                            |
+| ---------------------- | ---------------------------------------------------------------------------------------------------|
+| **ID**                 | TC-01                                                                                              |
+| **Descripción**        | Verificar que el chatbox se muestre correctamente al cargar la aplicación                          |
+| **Precondición**       | Aplicación ejecutándose en localhost                                                               |
+| **Pasos**              | 1. Abrir la aplicación web                                                                         |
+| **Expected Result**    | The chatbox is visible and ready for interaction                                                   |
+| **Actual Result**      | The chatbox initializes automatically and displays the message flow without requiring user action. |
+| **Status**             | Pass                                                                                               |
+| **Severity**           | High                                                                                               |
+| **Nota**               | No existe una opción para desactivar el auto-inicio o cerrar el chatbox manualmente                |
 
 ---
 
 ### TC-02 – Selección de respuesta del usuario
 
-| Campo                  | Detalle                                                                               |
-| ---------------------- | --------------------------------------------------------------------------------------|
-| **ID**                 | TC-02                                                                                 |
-| **Descripción**        | Verificar que el usuario pueda seleccionar una opción de respuesta                    |
-| **Precondición**       | Chatbox iniciado y pregunta visible                                                   |
-| **Pasos**              | 1. Visualizar las opciones mostradas 2. Seleccionar una opción                        |
-| **Expected Result**    | The selected option is displayed as a user message and sent automatically             |
-| **Actual Result**      | Pendiente                                                                             |
-| **Status**             | Not Executed                                                                          |
-| **Severity**           | Medium                                                                                |
-| **Nota**               |                                                                                       |
+| Campo                  | Detalle                                                                                                            |
+| ---------------------- | -------------------------------------------------------------------------------------------------------------------|
+| **ID**                 | TC-02                                                                                                              |
+| **Descripción**        | Verificar que el usuario pueda seleccionar una opción de respuesta                                                 |
+| **Precondición**       | Chatbox iniciado y pregunta visible                                                                                |
+| **Pasos**              | 1. Visualizar las opciones mostradas 2. Seleccionar una opción                                                     |
+| **Expected Result**    | The selected option is displayed as a user message and sent automatically                                          |
+| **Actual Result**      | The selected option is displayed as a user message and is sent automatically without requiring any further action. |
+| **Status**             | Pass                                                                                                               |
+| **Severity**           | Medium                                                                                                             |
+| **Nota**               |                                                                                                                    |
 
 ---
 
 ### TC-03 – Recepción de pregunta siguiente
 
-| Campo                  | Detalle                                                               |
-| ---------------------- | --------------------------------------------------------------------- |
-| **ID**                 | TC-03                                                                 |
-| **Descripción**        | Validar que el sistema envíe la siguiente pregunta tras una respuesta |
-| **Precondición**       | Respuesta enviada                                                     |
-| **Pasos**              | 1. Enviar respuesta válida                                            |
-| **Expected Result**    | The system displays the next question in the chatbox                  |
-| **Actual Result**      | Pendiente                                                             |
-| **Status**             | Not Executed                                                          |
-| **Severity**           | High                                                                  |
-| **Nota**               |                                                                       |
+| Campo                  | Detalle                                                                                                               |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------|
+| **ID**                 | TC-03                                                                                                                 |
+| **Descripción**        | Validar que el sistema envíe la siguiente pregunta tras una respuesta                                                 |
+| **Precondición**       | Respuesta enviada                                                                                                     |
+| **Pasos**              | 1. Enviar respuesta válida                                                                                            |
+| **Expected Result**    | The system displays the next question in the chatbox                                                                  |
+| **Actual Result**      | The system automatically displays the next question along with the corresponding options after an answer is selected. |
+| **Status**             | Pass                                                                                                                  |
+| **Severity**           | High                                                                                                                  |
+| **Nota**               |                                                                                                                       |
 
 ---
 
 ### TC-04 – Flujo completo de recomendación
 
-| Campo                  | Detalle                                                               |
-| ---------------------- | ----------------------------------------------------------------------|
-| **ID**                 | TC-04                                                                 |
-| **Descripción**        | Verificar que el sistema genere una recomendación final               |
-| **Precondición**       | Usuario responde todas las preguntas                                  |
-| **Pasos**              | 1. Responder todas las preguntas del chat                             |
-| **Expected Result**    | The system displays a coffee recommendation with name and description |
-| **Actual Result**      | Pendiente                                                             |
-| **Status**             | Not Executed                                                          |
-| **Severity**           | Critical                                                              |
-| **Nota**               |                                                                       |
+| Campo                  | Detalle                                                                                                                          |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------|
+| **ID**                 | TC-04                                                                                                                            |
+| **Descripción**        | Verificar que el sistema genere una recomendación final                                                                          |
+| **Precondición**       | Usuario responde todas las preguntas                                                                                             |
+| **Pasos**              | 1. Responder todas las preguntas del chat                                                                                        |
+| **Expected Result**    | The system displays a coffee recommendation with name and description                                                            |
+| **Actual Result**      | For some combinations of user answers, the system does not display any coffee recommendation after completing the questionnaire. |
+| **Status**             | Fail                                                                                                                             |
+| **Severity**           | Critical                                                                                                                         |
+| **Nota**               |                                                                                                                                  |
 
 ---
 
