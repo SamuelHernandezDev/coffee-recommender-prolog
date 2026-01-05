@@ -10,19 +10,16 @@ export default function ChatBox({ messages = [], onSelect, collapse }) {
     typeof Audio !== "undefined" ? new Audio("/sounds/pop.mp3") : null
   );
 
-  // Estado para manejar animación de colapso
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  // 🔹 colapso automático (ej: después de mostrar recomendación)
   useEffect(() => {
     if (collapse) {
-      // Un pequeño delay para permitir que termine de renderizar
       setTimeout(() => setIsCollapsed(true), 150);
-    } else {
-      setIsCollapsed(false);
     }
   }, [collapse]);
 
-  // sonido al cambiar mensaje
+  // 🔹 sonido al recibir respuesta del assistant
   useEffect(() => {
     if (!messages.length) return;
 
@@ -41,38 +38,58 @@ export default function ChatBox({ messages = [], onSelect, collapse }) {
   }, [messages]);
 
   return (
-    <div className={`chatbox-container ${isCollapsed ? "collapsed" : ""}`}>
-      {messages.map((msg, index) => {
-        // ---- OPCIONES (sin bubble, limpio) ----
-        if (msg.options) {
+    <div className="chatbox-wrapper">
+      
+      {/* HEADER */}
+      <div
+        className="chatbox-header"
+        onClick={() => setIsCollapsed(prev => !prev)}
+      >
+        <span className="chatbox-title">Coffe</span>
+
+        <span
+          className={`chatbox-chevron ${
+            isCollapsed ? "collapsed" : ""
+          }`}
+        >
+          ▾
+        </span>
+      </div>
+
+      {/* BODY */}
+      <div className={`chatbox-container ${isCollapsed ? "collapsed" : ""}`}>
+        {messages.map((msg, index) => {
+          // ---- OPCIONES ----
+          if (msg.options) {
+            return (
+              <div
+                key={index}
+                className="w-full mt-3 flex flex-col gap-3 items-start"
+              >
+                {msg.options.map((opt, i) => (
+                  <OptionButton
+                    key={i}
+                    label={opt.label}
+                    onClick={() => onSelect(opt.value, opt.label)}
+                  />
+                ))}
+              </div>
+            );
+          }
+
+          // ---- MENSAJE NORMAL ----
           return (
             <div
               key={index}
-              className="w-full mt-3 flex flex-col gap-3 items-start"
+              className={`chat-bubble ${
+                msg.sender === "user" ? "user" : "assistant"
+              }`}
             >
-              {msg.options.map((opt, i) => (
-                <OptionButton
-                  key={i}
-                  label={opt.label}
-                  onClick={() => onSelect(opt.value, opt.label)}
-                />
-              ))}
+              {msg.typing ? <TypingIndicator /> : msg.text}
             </div>
           );
-        }
-
-        // ---- mensaje normal ----
-        return (
-          <div
-            key={index}
-            className={`chat-bubble ${
-              msg.sender === "user" ? "user" : "assistant"
-            }`}
-          >
-            {msg.typing ? <TypingIndicator /> : msg.text}
-          </div>
-        );
-      })}
+        })}
+      </div>
     </div>
   );
 }

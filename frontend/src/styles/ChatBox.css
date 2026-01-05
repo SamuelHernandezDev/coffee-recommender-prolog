@@ -1,54 +1,87 @@
-.chatbox-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    width: 100%;
-    max-height: 70vh;
-    overflow-y: auto;
-  }
-  
-  .chat-bubble {
-    max-width: 75%;
-    padding: 10px 14px;
-    border-radius: 14px;
-    font-size: 15px;
-    line-height: 1.4;
-    word-break: break-word;
-    animation: fadeIn 0.2s ease-in-out;
-  }
-  
-  .chat-bubble.assistant {
-    background: #f1f5f9;
-    align-self: flex-start;
-  }
-  
-  .chat-bubble.user {
-    background: #4f46e5;
-    color: white;
-    align-self: flex-end;
-  }
+/* ===== WRAPPER ===== */
+.chatbox-wrapper {
+  width: 100%;
+  overflow: hidden;
+  /* sin fondo, sin borde, sin radius nuevo */
+}
 
-  .chatbox-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 15px;
-    width: 100%;
-    max-height: 70vh;
-    overflow-y: auto;
-    transition: max-height .4s ease, padding .3s ease;
+/* ===== HEADER ===== */
+.chatbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 15px;
+  cursor: pointer;
+  user-select: none;
+  background: transparent;
+  color:#87ffcf;
+}
+
+.chatbox-title {
+  font-size: 14px;
+  font-weight: 600; /* font-semibold */
+  letter-spacing: 0.02em; /* sutil, elegante */
+  opacity: 0.7;
+}
+
+.chatbox-chevron {
+  font-size: 16px;
+  transition: transform 0.3s ease;
+  opacity: 0.6;
+}
+
+.chatbox-chevron.collapsed {
+  transform: rotate(-90deg);
+}
+
+/* ===== CHAT CONTAINER (TU ESTILO ORIGINAL) ===== */
+.chatbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px;
+  width: 100%;
+  max-height: 70vh;
+  overflow-y: auto;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+}
+
+.chatbox-container.collapsed {
+  max-height: 18vh;
+  padding: 8px 15px;
+  overflow-y: hidden;
+}
+
+/* ===== CHAT BUBBLES (SIN CAMBIOS) ===== */
+.chat-bubble {
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 15px;
+  line-height: 1.4;
+  word-break: break-word;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.chat-bubble.assistant {
+  background: #f1f5f9;
+  align-self: flex-start;
+}
+
+.chat-bubble.user {
+  background: #4f46e5;
+  color: white;
+  align-self: flex-end;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
   }
-  
-  .chatbox-container.collapsed {
-    max-height: 18vh; /* puedes modificar el tamaño final */
-    padding: 8px 15px;
-    overflow-y: hidden;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
+}
