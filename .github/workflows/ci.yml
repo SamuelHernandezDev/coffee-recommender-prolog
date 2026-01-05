@@ -1,11 +1,11 @@
-name: CI
+name: Frontend CI
 
 on:
   pull_request:
     branches: [ main ]
 
 jobs:
-  build:
+  frontend-build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,8 +17,10 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install frontend dependencies
+        working-directory: frontend
         run: npm install
 
-      - name: Build project
+      - name: Build frontend
+        working-directory: frontend
         run: npm run build
