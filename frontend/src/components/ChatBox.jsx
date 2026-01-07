@@ -6,6 +6,7 @@ import "../styles/ChatBox.css";
 
 export default function ChatBox({ messages = [], onSelect, collapse }) {
   const previousMessages = useRef([]);
+  const chatContainerRef = useRef(null); // 🔹 NUEVO
   const audioRef = useRef(
     typeof Audio !== "undefined" ? new Audio("/sounds/pop.mp3") : null
   );
@@ -37,6 +38,16 @@ export default function ChatBox({ messages = [], onSelect, collapse }) {
     previousMessages.current = messages;
   }, [messages]);
 
+  // 🔹 AUTO-SCROLL AL ÚLTIMO MENSAJE (FIX BUG)
+  useEffect(() => {
+    if (isCollapsed) return;
+
+    const container = chatContainerRef.current;
+    if (!container) return;
+
+    container.scrollTop = container.scrollHeight;
+  }, [messages, isCollapsed]);
+
   return (
     <div className="chatbox-wrapper">
       
@@ -48,16 +59,17 @@ export default function ChatBox({ messages = [], onSelect, collapse }) {
         <span className="chatbox-title">Coffe</span>
 
         <span
-          className={`chatbox-chevron ${
-            isCollapsed ? "collapsed" : ""
-          }`}
+          className={`chatbox-chevron ${isCollapsed ? "collapsed" : ""}`}
         >
           ▾
         </span>
       </div>
 
       {/* BODY */}
-      <div className={`chatbox-container ${isCollapsed ? "collapsed" : ""}`}>
+      <div
+        ref={chatContainerRef} // 🔹 NUEVO
+        className={`chatbox-container ${isCollapsed ? "collapsed" : ""}`}
+      >
         {messages.map((msg, index) => {
           // ---- OPCIONES ----
           if (msg.options) {
