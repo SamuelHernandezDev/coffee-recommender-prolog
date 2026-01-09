@@ -69,8 +69,8 @@
 }
 
 .chat-bubble.user {
-  background: #4f46e5;
-  color: white;
+  background: #87ffcf;
+  color: rgb(0, 0, 0);
   align-self: flex-end;
 }
 
