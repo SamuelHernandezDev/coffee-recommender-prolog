@@ -85,3 +85,23 @@
     transform: translateY(0);
   }
 }
+
+/* ===== CUSTOM SCROLLBAR ===== */
+.chatbox-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatbox-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatbox-container::-webkit-scrollbar-thumb {
+  background-color: rgba(135, 255, 207, 0.35); /* verde suave */
+  border-radius: 10px;
+  transition: background-color 0.2s ease;
+}
+
+.chatbox-container::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(135, 255, 207, 0.6);
+}
+
