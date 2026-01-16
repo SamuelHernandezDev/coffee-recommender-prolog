@@ -1,18 +1,19 @@
-// src/components/RecommendationCard.jsx
 import { motion } from "framer-motion";
 import coffees from "../data/coffees";
+import OptionButton from "./OptionButton";
+import { RotateCcw, LogOut } from "lucide-react";
 
-export default function RecommendationCard({ coffee }) {
+export default function RecommendationCard({
+  coffee,
+  onRestart,
+  onExit,
+}) {
   if (!coffee) return null;
 
-  // Extraer ID sin importar si viene como string o como objeto
   const coffeeId = typeof coffee === "string" ? coffee : coffee.id;
-
-  // Buscar el café real en coffees.js
   const finalCoffee = coffees.find(c => c.id === coffeeId);
 
   if (!finalCoffee) {
-    console.log("❌ No se encontró el café con id:", coffeeId);
     return <p className="text-white">No se encontró la bebida.</p>;
   }
 
@@ -55,6 +56,21 @@ export default function RecommendationCard({ coffee }) {
           </ul>
         </div>
       )}
+
+      {/* --- ACTIONS --- */}
+      <div className="mt-6 flex flex-col gap-3">
+        <OptionButton
+          label="Restart questionnaire"
+          icon={RotateCcw}
+          onClick={onRestart}
+        />
+
+        <OptionButton
+          label="Change knowledge level"
+          icon={LogOut}
+          onClick={onExit}
+        />
+      </div>
     </motion.div>
   );
 }
