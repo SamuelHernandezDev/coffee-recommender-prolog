@@ -1,6 +1,7 @@
 // src/pages/Assistant.jsx
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useUserAnswers } from "../context/UserAnswersContext";
 import ChatBox from "../components/ChatBox";
 import RecommendationCard from "../components/RecommendationCard";
 import useChatFlow from "../hooks/useChatFlow";
@@ -15,6 +16,22 @@ export default function Assistant() {
     answers
   } = useChatFlow();
 
+  const { 
+    restartQuestionnaire, 
+    resetFlow 
+  } = useUserAnswers();
+
+  const handleRestartQuestionnaire = () => {
+    restartQuestionnaire();   // reinicia lógica
+    setMessages([]);          // 🔥 limpia chat
+    setInitialStep(0);        // reinicia intro
+  };
+  
+  const handleExitToHome = () => {
+    resetFlow();              // borra nivel + flujo
+    navigate("/");            // vuelve al home
+  };
+  
   const navigate = useNavigate();
 
   const TYPING_TIME = 1200;
@@ -140,7 +157,11 @@ export default function Assistant() {
         {/* RECOMENDACIÓN FINAL */}
         {finished && recommendation && (
           <div className="mt-10">
-            <RecommendationCard coffee={recommendation} />
+            <RecommendationCard
+              coffee={recommendation}
+              onRestart={handleRestartQuestionnaire}
+              onExit={handleExitToHome}
+            />
           </div>
         )}
       </div>
