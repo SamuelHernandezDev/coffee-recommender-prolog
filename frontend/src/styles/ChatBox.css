@@ -1,11 +1,8 @@
-/* ===== WRAPPER ===== */
 .chatbox-wrapper {
   width: 100%;
   overflow: hidden;
-  /* sin fondo, sin borde, sin radius nuevo */
 }
 
-/* ===== HEADER ===== */
 .chatbox-header {
   display: flex;
   justify-content: space-between;
@@ -19,8 +16,8 @@
 
 .chatbox-title {
   font-size: 14px;
-  font-weight: 600; /* font-semibold */
-  letter-spacing: 0.02em; /* sutil, elegante */
+  font-weight: 600; 
+  letter-spacing: 0.02em;
   opacity: 0.7;
 }
 
@@ -34,7 +31,6 @@
   transform: rotate(-90deg);
 }
 
-/* ===== CHAT CONTAINER (TU ESTILO ORIGINAL) ===== */
 .chatbox-container {
   display: flex;
   flex-direction: column;
@@ -47,12 +43,11 @@
 }
 
 .chatbox-container.collapsed {
-  max-height: 18vh;
-  padding: 8px 15px;
+  max-height: 0vh;
+  padding: 0px 15px;
   overflow-y: hidden;
 }
 
-/* ===== CHAT BUBBLES (SIN CAMBIOS) ===== */
 .chat-bubble {
   max-width: 75%;
   padding: 10px 14px;
@@ -74,7 +69,6 @@
   align-self: flex-end;
 }
 
-/* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -86,7 +80,6 @@
   }
 }
 
-/* ===== CUSTOM SCROLLBAR ===== */
 .chatbox-container::-webkit-scrollbar {
   width: 6px;
 }
@@ -96,7 +89,7 @@
 }
 
 .chatbox-container::-webkit-scrollbar-thumb {
-  background-color: rgba(135, 255, 207, 0.35); /* verde suave */
+  background-color: rgba(135, 255, 207, 0.35); 
   border-radius: 10px;
   transition: background-color 0.2s ease;
 }
