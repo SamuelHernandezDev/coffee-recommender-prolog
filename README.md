@@ -9,9 +9,13 @@ y recibe una recomendación generada por el motor lógico en Prolog.
 
 ---
 
-<img width="1202" height="668" alt="image" src="https://github.com/user-attachments/assets/ad13c6d3-97a0-47ec-9183-87e5c582258a" />
-<img width="1197" height="675" alt="image" src="https://github.com/user-attachments/assets/9a550727-bc86-426d-9e2b-972df4b1d6ef" />
-<img width="1080" height="607" alt="image" src="https://github.com/user-attachments/assets/2561511c-1ad3-4d47-ba12-757833ac43b1" />
+## Vista general
+
+![Selección de nivel](README-assets/home.png)
+
+![Flujo del chatbox](README-assets/chat-flow.png)
+
+![Recomendación de café](README-assets/coffee-recommendation.png)
 
 ---
 
