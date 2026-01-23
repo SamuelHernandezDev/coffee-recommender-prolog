@@ -2,25 +2,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import TypingIndicator from "./TypingIndicator";
 import OptionButton from "./OptionButton";
+import { useUserAnswers } from "../context/UserAnswersContext";
 import "../styles/ChatBox.css";
 
 export default function ChatBox({ messages = [], onSelect, collapse }) {
   const previousMessages = useRef([]);
-  const chatContainerRef = useRef(null); // 🔹 NUEVO
+  const chatContainerRef = useRef(null);
   const audioRef = useRef(
     typeof Audio !== "undefined" ? new Audio("/sounds/pop.mp3") : null
   );
 
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // 🔹 colapso automático (ej: después de mostrar recomendación)
+  const { level } = useUserAnswers();
+
+    const levelLabelMap = {
+      beginner: "Principiante",
+      intermediate: "Intermedio",
+      expert: "Experto",
+    };
+  
+    const levelLabel = level ? levelLabelMap[level] : null;
+
   useEffect(() => {
     if (collapse) {
       setTimeout(() => setIsCollapsed(true), 150);
     }
   }, [collapse]);
 
-  // 🔹 sonido al recibir respuesta del assistant
   useEffect(() => {
     if (!messages.length) return;
 
@@ -38,7 +47,6 @@ export default function ChatBox({ messages = [], onSelect, collapse }) {
     previousMessages.current = messages;
   }, [messages]);
 
-  // 🔹 AUTO-SCROLL AL ÚLTIMO MENSAJE (FIX BUG)
   useEffect(() => {
     if (isCollapsed) return;
 
@@ -58,6 +66,12 @@ export default function ChatBox({ messages = [], onSelect, collapse }) {
       >
         <span className="chatbox-title">Coffe</span>
 
+        {levelLabel && (
+          <span className="chatbox-level">
+            Nivel - {levelLabel}
+          </span>
+        )}
+
         <span
           className={`chatbox-chevron ${isCollapsed ? "collapsed" : ""}`}
         >
@@ -67,7 +81,7 @@ export default function ChatBox({ messages = [], onSelect, collapse }) {
 
       {/* BODY */}
       <div
-        ref={chatContainerRef} // 🔹 NUEVO
+        ref={chatContainerRef}
         className={`chatbox-container ${isCollapsed ? "collapsed" : ""}`}
       >
         {messages.map((msg, index) => {
