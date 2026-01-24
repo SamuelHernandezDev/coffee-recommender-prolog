@@ -44,7 +44,6 @@ export default function Navbar() {
             Inicio
           </NavLink>
 
-          {/* 
           <NavLink
             to="/menu"
             className={({ isActive }) =>
@@ -53,7 +52,6 @@ export default function Navbar() {
           >
             Menú
           </NavLink>
-          */}
 
         </div>
       </div>
