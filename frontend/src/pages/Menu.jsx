@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CategorySelector from "../components/menu/CategorySelector";
 import MenuGrid from "../components/menu/MenuGrid";
+import MenuItemModal from "../components/menu/MenuItemModal";
 import "../styles/background.css";
 
 const items = {
@@ -52,35 +53,10 @@ export default function Menu() {
         onSelect={setSelectedItem}
       />
       </div>
-      
-      {/* Detalle expandido */}
-      <AnimatePresence>
-        {selectedItem && (
-          <motion.div
-            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-white rounded-3xl max-w-lg w-full p-6 relative"
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-            >
-              <button
-                className="absolute top-4 right-4 text-gray-700 font-bold text-2xl"
-                onClick={() => setSelectedItem(null)}
-              >
-                ×
-              </button>
-              <img src={selectedItem.img} alt={selectedItem.name} className="w-full h-64 object-cover rounded-xl mb-4" />
-              <h2 className="text-2xl font-bold mb-2">{selectedItem.name}</h2>
-              <p className="text-gray-800">{selectedItem.desc}</p>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <MenuItemModal
+        item={selectedItem}
+        onClose={() => setSelectedItem(null)}
+      />
     </div>
   );
 }
