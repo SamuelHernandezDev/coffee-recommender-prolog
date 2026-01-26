@@ -38,7 +38,7 @@ export default function Menu() {
       <div className="bg-bottom-fade" />
 
       {/* Contenido */}
-      <div className="relative z-10 max-w-6xl mx-auto py-16">
+      <div className="relative z-10 max-w-6xl mx-auto pt-24 sm:pt-32 md:pt-40 pb-16">
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-xl">
           Nuestra Carta
         </h1>
