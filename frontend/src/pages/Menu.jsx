@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import CategorySelector from "../components/menu/CategorySelector";
 import "../styles/background.css";
 
 const items = {
@@ -41,25 +42,10 @@ export default function Menu() {
         </h1>
         <p className="text-gray-100 mt-2 mb-8">Explora nuestros cafés y frapés</p>
 
-        {/* Selector de categoría */}
-        <div className="flex justify-center gap-4 mb-8">
-          <button
-            className={`px-6 py-2 rounded-full font-semibold transition ${
-              category === "cafes" ? "bg-amber-400 text-white" : "bg-white/20 text-gray-100"
-            }`}
-            onClick={() => setCategory("cafes")}
-          >
-            Cafés
-          </button>
-          <button
-            className={`px-6 py-2 rounded-full font-semibold transition ${
-              category === "frapes" ? "bg-emerald-300 text-white" : "bg-white/20 text-gray-100"
-            }`}
-            onClick={() => setCategory("frapes")}
-          >
-            Frapés
-          </button>
-        </div>
+      <CategorySelector
+        category={category}
+        onChange={setCategory}
+      />
 
         {/* Panel de cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 overflow-y-auto">
