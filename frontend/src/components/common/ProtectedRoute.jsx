@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useUserAnswers } from "../context/UserAnswersContext";
+import { useUserAnswers } from "../../context/UserAnswersContext";
 
 export default function ProtectedRoute({ children }) {
   const { level } = useUserAnswers();

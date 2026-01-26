@@ -16,25 +16,18 @@ export default function Navbar() {
         fixed top-0 left-0 w-full z-50
         bg-[linear-gradient(to_bottom,rgba(0,0,0,1)_0%,rgba(0,0,0,0.92)_20%,rgba(0,0,0,0.75)_40%,rgba(0,0,0,0.45)_65%,rgba(0,0,0,0.15)_85%,rgba(0,0,0,0)_100%)]
         pt-4
-        pb-20
-      "
-    >
+        pb-20">
+          
       <div className="max-w-5xl mx-auto px-[30px] flex items-center justify-between">
-
-        {/* LOGO + TEXTO */}
         <div className="flex items-center gap-3">
           <img src="/logo.png" alt="Logo Espresso" className="w-10 h-10" />
-
-{/* TEXTO DEL LOGO (solo en pantallas medianas hacia arriba) */}
-<div className="hidden md:flex text-2xl font-extrabold drop-shadow-lg">
-  <span className="text-white">ESPRESSO</span>
-  <span className="text-emerald-300">.NET</span>
-</div>
-
+          <div className="hidden md:flex text-2xl font-extrabold drop-shadow-lg">
+            <span className="text-white">ESPRESSO</span>
+            <span className="text-emerald-300">.NET</span>
+          </div>
         </div>
 
-        {/* LINKS */}
-        <div className="flex gap-6">
+       <div className="flex gap-6">
           <NavLink
             to="/"
             className={({ isActive }) =>

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import coffees from "../data/coffees";
-import OptionButton from "./OptionButton";
+import coffees from "../../data/coffees";
+import OptionButton from "../common/OptionButton";
 import { RotateCcw, LogOut } from "lucide-react";
 
 export default function RecommendationCard({
