@@ -7,10 +7,10 @@ import Menu from "./pages/Menu";
 import Assistant from "./pages/Assistant";
 import NotFound from "./pages/NotFound";
 
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/common/ProtectedRoute";
 
 // Layout
-import Navbar from "./components/Navbar";
+import Navbar from "./components/layout/Navbar";
 
 const AppLayout = ({ children }) => {
   return (

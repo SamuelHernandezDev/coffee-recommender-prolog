@@ -2,8 +2,8 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useUserAnswers } from "../context/UserAnswersContext";
-import ChatBox from "../components/ChatBox";
-import RecommendationCard from "../components/RecommendationCard";
+import ChatBox from "../components/chatbox/ChatBox";
+import RecommendationCard from "../components/chatbox/RecommendationCard";
 import useChatFlow from "../hooks/useChatFlow";
 import "../styles/background.css";
 
@@ -23,7 +23,7 @@ export default function Assistant() {
 
   const handleRestartQuestionnaire = () => {
     restartQuestionnaire();   // reinicia lógica
-    setMessages([]);          // 🔥 limpia chat
+    setMessages([]);          // limpia chat
     setInitialStep(0);        // reinicia intro
   };
   
@@ -43,10 +43,9 @@ export default function Assistant() {
   // secuencia inicial
   const [initialStep, setInitialStep] = useState(0);
 
-  // 🔥 NUEVO → definimos si el chat debe colapsar
+  // definimos si el chat debe colapsar
   const shouldCollapseChat = finished === true;
 
-  // ---- limpiar typing fantasma ----
   function clearTyping() {
     setMessages(prev => prev.filter(m => !m.typing));
   }
@@ -134,7 +133,6 @@ export default function Assistant() {
   return (
     <div className="relative min-h-[100dvh] flex flex-col items-center justify-center px-4 pb-20">
 
-      {/* VIDEO FONDO */}
       <video
         src="/videos/Barra.mp4"
         className="fixed inset-0 w-full h-[100dvh] object-cover"

@@ -41,8 +41,6 @@ const questionsExpert = [
     type: "choice",
   },
 
-  // --- NUEVAS PREGUNTAS EXPERT PARA LLEGAR A 10 ---
-
   {
     id: "e5",
     question: "¿Qué acidez toleras?",

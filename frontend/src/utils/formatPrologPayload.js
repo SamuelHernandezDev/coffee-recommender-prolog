@@ -31,10 +31,10 @@ export function formatPrologPayload(answers = []) {
   };
 
   return answers.map(ans => {
-    const q = ans.questionId || ans.id || ans.question; // lo que guardes en addAnswer
+    const q = ans.questionId || ans.id || ans.question; 
     const pred = questionToPredicate[q];
     if (!pred) return null;
-    // asegúrate de que ans.value esté en formato prolog-friendly (sin espacios)
+ 
     return `${pred}(${ans.value})`;
   }).filter(Boolean);
 }

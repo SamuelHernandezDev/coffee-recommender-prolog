@@ -3,9 +3,9 @@
     inset: 0;
     background: linear-gradient(
       to bottom right,
-      rgba(255, 167, 53, 0.6),   /* amber-200/60 */
-      rgba(65, 65, 65, 0.473), /* white/20   */
-      rgba(0, 0, 0, 0.76)   /* emerald-100/60 */
+      rgba(255, 167, 53, 0.6),   
+      rgba(65, 65, 65, 0.473), 
+      rgba(0, 0, 0, 0.76)   
     );
     backdrop-filter: blur(3px);
     z-index: 1;

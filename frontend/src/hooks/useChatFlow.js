@@ -20,7 +20,7 @@ export default function useChatFlow() {
     isFinished,
   } = useUserAnswers();
 
-  // ⭐ Aquí se guardará la recomendación real de Prolog
+  // Aquí se guardará la recomendación real de Prolog
   const [recommendation, setRecommendation] = useState(null);
   // Hook de Prolog
   const { sendAnswersToProlog } = usePrologApi();
@@ -39,26 +39,26 @@ export default function useChatFlow() {
     }
   }, [level]);
 
-  // ✔ Pregunta actual
+  // Pregunta actual
   const currentQuestion = questionList[currentQuestionIndex] || null;
 
-  // ✔ Saber si ya terminó
+  // Saber si ya terminó
   const finished = isFinished(questionList.length);
   const shouldCollapseChat = finished || Boolean(recommendation);
 
-  // ✔ Guardar respuesta y pasar a la siguiente
+  // Guardar respuesta y pasar a la siguiente
   const submitAnswer = (userResponse) => {
     const finalAnswer = {
-      questionId: currentQuestion.id,      // <--- AQUI ESTA LA CLAVE
+      questionId: currentQuestion.id,      
       question: currentQuestion.text,
-      ...userResponse,                     // value, label, etc.
+      ...userResponse,                    
     };
   
     addAnswer(finalAnswer);
     goNextQuestion(questionList.length);
   };
   
-  // ⭐⭐ Paso clave: cuando termine → enviar respuestas a Prolog
+  // Paso clave: cuando termine → enviar respuestas a Prolog
   useEffect(() => {
     if (!finished) return;
     if (answers.length === 0) return;
@@ -78,7 +78,7 @@ export default function useChatFlow() {
     runProlog();
   }, [finished]);
 
-  // ✔ Resetear todo
+  // Resetear todo
   const restartChatFlow = () => {
     resetFlow();
     setRecommendation(null);
@@ -92,7 +92,7 @@ export default function useChatFlow() {
     finished,
     answers,
     submitAnswer,
-    recommendation, // 🟢 ahora viene de Prolog
+    recommendation, 
     restartChatFlow,
     shouldCollapseChat,
   };

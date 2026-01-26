@@ -39,8 +39,6 @@ const questionsIntermediate = [
     type: "choice",
   },
 
-  // --- NUEVAS PREGUNTAS INTERMEDIATE ---
-
   {
     id: "i5",
     question: "¿Qué temperatura EXACTA prefieres?",

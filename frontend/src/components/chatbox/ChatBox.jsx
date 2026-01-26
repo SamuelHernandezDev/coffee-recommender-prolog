@@ -1,9 +1,9 @@
 // src/components/ChatBox.jsx
 import React, { useEffect, useRef, useState } from "react";
 import TypingIndicator from "./TypingIndicator";
-import OptionButton from "./OptionButton";
-import { useUserAnswers } from "../context/UserAnswersContext";
-import "../styles/ChatBox.css";
+import OptionButton from "../common/OptionButton";
+import { useUserAnswers } from "../../context/UserAnswersContext";
+import "../../styles/ChatBox.css";
 
 export default function ChatBox({ messages = [], onSelect, collapse }) {
   const previousMessages = useRef([]);
