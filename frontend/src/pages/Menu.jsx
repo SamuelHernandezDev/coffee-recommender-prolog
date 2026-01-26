@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import CategorySelector from "../components/menu/CategorySelector";
+import MenuGrid from "../components/menu/MenuGrid";
 import "../styles/background.css";
 
 const items = {
@@ -46,23 +47,12 @@ export default function Menu() {
         category={category}
         onChange={setCategory}
       />
-
-        {/* Panel de cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 overflow-y-auto">
-          {items[category].map((item) => (
-            <motion.div
-              key={item.id}
-              className="bg-white/10 backdrop-blur-sm rounded-3xl p-4 cursor-pointer shadow-md border border-white/20 hover:scale-105 transition-transform"
-              onClick={() => setSelectedItem(item)}
-              whileHover={{ scale: 1.05 }}
-            >
-              <img src={item.img} alt={item.name} className="w-full h-48 object-cover rounded-xl mb-2" />
-              <h2 className="text-xl font-bold text-white">{item.name}</h2>
-            </motion.div>
-          ))}
-        </div>
+      <MenuGrid
+        items={items[category]}
+        onSelect={setSelectedItem}
+      />
       </div>
-
+      
       {/* Detalle expandido */}
       <AnimatePresence>
         {selectedItem && (
