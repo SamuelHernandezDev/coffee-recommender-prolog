@@ -1,4 +1,4 @@
-const coffees = [
+export const coffees = [
     /* ------------------------------ CAFÉS CALIENTES ------------------------------ */
     {
       id: "espresso",
@@ -153,7 +153,7 @@ const coffees = [
       category: "frappuccino",
       level: "medium",
       season: "all",
-      image: "src/assets/images/coffees/frappuccino_java.png",
+      image: "src/assets/images/coffees/frappuccino_java_chip.png",
       description:
         "Café frappé con trozos de chocolate y crema batida. Uno de los más pedidos.",
       ingredients: ["Café", "Leche", "Hielo", "Chispas de chocolate", "Chocolate", "Crema batida"]
