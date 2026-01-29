@@ -3,7 +3,8 @@ import CategorySelector from "../components/menu/CategorySelector";
 import MenuGrid from "../components/menu/MenuGrid";
 import MenuItemModal from "../components/menu/MenuItemModal";
 import "../styles/background.css";
-import { categories, items } from "../data/navMenu";
+import { buildNavMenu } from "../features/menu/navMenu.adapter";
+const { categories, items } = buildNavMenu();
 
 export default function Menu() {
   const defaultCategory = categories[0]?.key;
