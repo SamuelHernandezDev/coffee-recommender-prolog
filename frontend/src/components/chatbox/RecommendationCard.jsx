@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import coffees from "../../data/coffees";
+import coffees from "../../data/domain/coffees";
 import OptionButton from "../common/OptionButton";
 import { RotateCcw, LogOut } from "lucide-react";
 

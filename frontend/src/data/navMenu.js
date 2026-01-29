@@ -1,4 +1,4 @@
-import { coffees } from "./coffees";
+import { coffees } from "./domain/coffees";
 
 const CATEGORY_MAP = {
   hot: "hotCoffees",

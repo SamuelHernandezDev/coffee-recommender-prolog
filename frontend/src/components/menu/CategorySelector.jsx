@@ -1,5 +1,3 @@
-
-
 export default function CategorySelector({ categories, active, onChange }) {
 
     return (
