@@ -2,9 +2,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useUserAnswers } from "../context/UserAnswersContext";
 
 // Importa tus bancos de preguntas
-import questionsBeginner from "../data/questionsBeginner";
-import questionsIntermediate from "../data/questionsIntermediate";
-import questionsExpert from "../data/questionsExpert";
+import questionsBeginner from "../data/assistant/questionsBeginner";
+import questionsIntermediate from "../data/assistant/questionsIntermediate";
+import questionsExpert from "../data/assistant/questionsExpert";
 
 // Hook del backend Prolog
 import usePrologApi from "./usePrologAPI";
