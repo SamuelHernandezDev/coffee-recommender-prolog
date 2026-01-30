@@ -29,4 +29,17 @@
     z-index: 2; 
     pointer-events: none;
   }
+
+  .scroll-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scroll-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scroll-hidden {
+    scrollbar-gutter: stable both-edges;
+  }
   
