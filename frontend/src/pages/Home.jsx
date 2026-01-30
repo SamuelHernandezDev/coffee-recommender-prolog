@@ -2,7 +2,7 @@ import { useUserAnswers } from "../context/UserAnswersContext";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
-import "../styles/background.css";
+import "../styles/globals/background.css";
 
 export default function Home() {
   const { setLevel } = useUserAnswers();

@@ -5,7 +5,7 @@ import { useUserAnswers } from "../context/UserAnswersContext";
 import ChatBox from "../components/chatbox/ChatBox";
 import RecommendationCard from "../components/chatbox/RecommendationCard";
 import useChatFlow from "../hooks/useChatFlow";
-import "../styles/background.css";
+import "../styles/globals/background.css";
 
 export default function Assistant() {
   const {
