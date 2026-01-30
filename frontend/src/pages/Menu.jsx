@@ -34,7 +34,7 @@ export default function Menu() {
         <h1 className="text-4xl sm:text-5xl font-extrabold text-white drop-shadow-xl">
           Nuestra Carta
         </h1>
-        <p className="text-gray-100 mt-2 mb-8">
+        <p className="text-gray-100 mt-1 mb-4">
           Explora nuestros cafés y frapés
         </p>
 
