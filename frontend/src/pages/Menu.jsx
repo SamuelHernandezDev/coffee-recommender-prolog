@@ -2,7 +2,8 @@ import { useState } from "react";
 import CategorySelector from "../components/menu/CategorySelector";
 import MenuGrid from "../components/menu/MenuGrid";
 import MenuItemModal from "../components/menu/MenuItemModal";
-import "../styles/background.css";
+import "../styles/globals/background.css";
+import "../styles/globals/scroll.css"
 import { buildNavMenu } from "../features/menu/navMenu.adapter";
 
 const { categories, items } = buildNavMenu();

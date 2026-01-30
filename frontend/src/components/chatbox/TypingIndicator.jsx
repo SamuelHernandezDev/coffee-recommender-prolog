@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/TypingIndicator.css";
+import "../../styles/features/chatbox/TypingIndicator.css";
 
 export default function TypingIndicator() {
   return (
