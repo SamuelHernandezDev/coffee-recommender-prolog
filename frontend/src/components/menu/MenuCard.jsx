@@ -4,6 +4,7 @@ export default function MenuCard({ item, onSelect }) {
   return (
     <motion.div
       className="
+        relative
         bg-white/10 backdrop-blur-sm
         rounded-2xl
         p-3 sm:p-4
@@ -12,6 +13,7 @@ export default function MenuCard({ item, onSelect }) {
         border border-white/20
         transition-transform
         hover:scale-[1.03]
+        hover:z-20
       "
       onClick={() => onSelect(item)}
       whileHover={{ scale: 1.03 }}
