@@ -46,7 +46,7 @@ export default function Menu() {
 
         {/* MenuWrapper */}
         <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-hidden">
-          <div className="pb-16">
+          <div className="pb-16 relative">
             <MenuGrid
               items={items[category] ?? []}
               onSelect={setSelectedItem}
