@@ -5,7 +5,7 @@ export default function MenuCard({ item, onSelect }) {
     <motion.div
       className="
         relative
-        bg-white/10 backdrop-blur-sm
+        bg-white/90 backdrop-blur-sm
         rounded-2xl
         p-3 sm:p-4
         cursor-pointer
@@ -29,7 +29,7 @@ export default function MenuCard({ item, onSelect }) {
           mb-2
         "
       />
-      <h2 className="text-sm sm:text-lg font-semibold text-white leading-tight">
+      <h2 className="text-sm sm:text-lg font-semibold text-black leading-tight">
         {item.name}
       </h2>
     </motion.div>

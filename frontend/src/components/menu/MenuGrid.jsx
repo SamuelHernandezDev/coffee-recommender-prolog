@@ -8,7 +8,7 @@ export default function MenuGrid({ items = [], onSelect }) {
       grid-cols-2 sm:grid-cols-2 md:grid-cols-3
       gap-4 sm:gap-6
       px-2 sm:px-3 md:px-3
-      py-2
+      py-12
       overflow-visible
     ">
       {items.map((item) => (
