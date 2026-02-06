@@ -10,3 +10,27 @@
   .scroll-hidden {
     scrollbar-gutter: stable both-edges;
   }
+
+  .scroll-fade-vertical {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10%,
+      black 90%,
+      transparent 100%
+    );
+  }
+  
+  .scroll-fade-vertical {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 10%,
+      black 88%,
+      transparent 100%
+    );
+  }
+
+  
+  
+  
