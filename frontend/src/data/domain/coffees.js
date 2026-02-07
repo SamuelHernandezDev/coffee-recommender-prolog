@@ -118,7 +118,7 @@ export const coffees = [
       category: "cold",
       level: "strong",
       season: "all",
-      image: "src/assets/images/coffees/nitro_cold_brew.png",
+      image: "src/assets/images/coffees/cold_brew.png",
       description:
         "Cold brew infusionado con nitrógeno para una textura cremosa tipo cerveza stout. Sin azúcar.",
       ingredients: ["Cold Brew", "Nitrógeno"]
