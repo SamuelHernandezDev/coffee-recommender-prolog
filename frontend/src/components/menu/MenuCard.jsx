@@ -5,7 +5,7 @@ export default function MenuCard({ item, onSelect }) {
     <motion.div
       className="
         relative
-        bg-white/90 backdrop-blur-sm
+        bg-white/75 backdrop-blur-sm
         rounded-2xl
         p-2 sm:p-2
         cursor-pointer

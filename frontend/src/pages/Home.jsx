@@ -23,17 +23,14 @@ export default function Home() {
     >
 
       {/* ---- VIDEO DE FONDO ---- */}
-<video 
-  src="/videos/cafeteria.mp4"
-  className="fixed inset-0 w-full h-[100dvh] min-h-[100dvh] object-cover"
-  autoPlay 
-  muted 
-  loop 
-  playsInline 
-/>
-
-
-
+      <video 
+        src="/videos/cafeteria.mp4"
+        className="fixed inset-0 w-full h-[100dvh] min-h-[100dvh] object-cover"
+        autoPlay 
+        muted 
+        loop 
+        playsInline 
+      />
 
       {/* ---- OVERLAY DESDE CSS ---- */}
       <div className="bg-overlay" />
