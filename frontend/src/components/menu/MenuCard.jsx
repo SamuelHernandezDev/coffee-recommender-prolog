@@ -7,7 +7,7 @@ export default function MenuCard({ item, onSelect }) {
         relative
         bg-white/90 backdrop-blur-sm
         rounded-2xl
-        p-3 sm:p-4
+        p-2 sm:p-2
         cursor-pointer
         shadow-md
         border border-white/20
@@ -23,10 +23,12 @@ export default function MenuCard({ item, onSelect }) {
         alt={item.name}
         className="
           w-full
-          h-28 sm:h-36 md:h-48
+          h-29 sm:h-40 md:h-49
+          object-contain
           object-cover
           rounded-lg
           mb-2
+          p-2
         "
       />
       <h2 className="text-sm sm:text-lg font-semibold text-black leading-tight">
