@@ -5,7 +5,7 @@ import MenuItemModal from "../components/menu/MenuItemModal";
 import "../styles/globals/background.css";
 import "../styles/globals/scroll.css"
 import { buildNavMenu } from "../features/menu/navMenu.adapter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const { categories, items } = buildNavMenu();
 
@@ -57,21 +57,24 @@ export default function Menu() {
           />
         </motion.div>
 
-        {/* MenuWrapper */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-hidden relative scroll-fade-vertical">
+      {/* MenuWrapper */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-hidden relative scroll-fade-vertical">
+        <AnimatePresence mode="wait">
           <motion.div
+            key={category}
             className="pb-16 relative"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25, ease: "easeOut" }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
           >
-             <MenuGrid
-             items={items[category] ?? []}
-             onSelect={setSelectedItem}
+            <MenuGrid
+              items={items[category] ?? []}
+              onSelect={setSelectedItem}
             />
           </motion.div>
-
-        </div>
+        </AnimatePresence>
+      </div>
       </div>
 
       <MenuItemModal
