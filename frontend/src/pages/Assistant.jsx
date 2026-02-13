@@ -6,7 +6,7 @@ import ChatBox from "../components/chatbox/ChatBox";
 import RecommendationCard from "../components/chatbox/RecommendationCard";
 import useChatFlow from "../hooks/useChatFlow";
 import "../styles/globals/background.css";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence  } from "framer-motion";
 
 export default function Assistant() {
   const {
@@ -159,15 +159,29 @@ export default function Assistant() {
         </motion.div>
 
         {/* RECOMENDACIÓN FINAL */}
-        {finished && recommendation && (
-          <div className="mt-10">
-            <RecommendationCard
-              coffee={recommendation}
-              onRestart={handleRestartQuestionnaire}
-              onExit={handleExitToHome}
-            />
-          </div>
-        )}
+        <AnimatePresence>
+          {finished && recommendation && (
+            <motion.div
+              className="mt-10"
+              initial={{ scale: 0.8, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95 }}
+              transition={{
+                type: "spring",
+                stiffness: 100,
+                damping: 10,
+                mass: 1,
+                delay: 0.2
+              }}
+            >
+              <RecommendationCard
+                coffee={recommendation}
+                onRestart={handleRestartQuestionnaire}
+                onExit={handleExitToHome}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
