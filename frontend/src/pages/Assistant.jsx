@@ -6,6 +6,7 @@ import ChatBox from "../components/chatbox/ChatBox";
 import RecommendationCard from "../components/chatbox/RecommendationCard";
 import useChatFlow from "../hooks/useChatFlow";
 import "../styles/globals/background.css";
+import { motion } from "framer-motion";
 
 export default function Assistant() {
   const {
@@ -148,9 +149,14 @@ export default function Assistant() {
       <div className="relative z-10 w-full max-w-2xl mt-32 mb-10">
 
         {/* CHAT */}
-        <div className="backdrop-blur-md bg-black/30 rounded-3xl p-4 border border-white/20 shadow-xl">
+        <motion.div
+          className="backdrop-blur-md bg-black/30 rounded-3xl p-4 border border-white/20 shadow-xl"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
+        >
           <ChatBox messages={messages} onSelect={handleSelect} collapse={shouldCollapseChat} />
-        </div>
+        </motion.div>
 
         {/* RECOMENDACIÓN FINAL */}
         {finished && recommendation && (
