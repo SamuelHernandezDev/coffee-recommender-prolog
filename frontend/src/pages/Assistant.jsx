@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { useState } from "react";
 import { useUserAnswers } from "../context/UserAnswersContext";
 import ChatBox from "../components/chatbox/ChatBox";
 import RecommendationCard from "../components/chatbox/RecommendationCard";
@@ -36,21 +37,48 @@ export default function Assistant() {
     CHAT_TIMING
   } = useAssistantMessages();
 
-  useAssistantConversationFlow({
-    finished,
-    currentQuestion,
+  const flow = useAssistantConversationFlow({
     sendAssistantMessage,
     sendOptions,
     clearTyping,
-    timing: CHAT_TIMING,
-    resetTrigger: currentQuestionIndex  
+    timing: CHAT_TIMING
   });
+
+  const [conversationState, setConversationState] = useState("intro");
+
+  useEffect(() => {
+
+    if (finished) {
+      setConversationState("finished");
+      return;
+    }
   
+    const run = async () => {
+  
+      if (conversationState === "intro") {
+        await flow.runIntro();
+        setConversationState("asking");
+        return;
+      }
+  
+      if (conversationState === "asking" && currentQuestion) {
+        await flow.runQuestion(currentQuestion);
+        setConversationState("waiting");
+      }
+  
+    };
+  
+    run();
+  
+  }, [conversationState, currentQuestion, finished]);
+    
   function handleSelect(value, label) {
     if (!currentQuestion) return;
   
     clearOptions();
     sendUserMessage(label);
+  
+    setConversationState("asking");
   
     submitAnswer({
       questionId: currentQuestion.id,
@@ -63,8 +91,10 @@ export default function Assistant() {
   function handleRestart() {
     restartQuestionnaire();
     resetMessages();
+    flow.resetFlow();
+    setConversationState("intro");
   }
-
+  
   function handleExit() {
     resetFlow();
     navigate("/");

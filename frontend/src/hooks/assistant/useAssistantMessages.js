@@ -20,7 +20,11 @@ export default function useAssistantMessages() {
 
     setMessages(prev => [
       ...prev,
-      { id, sender: "assistant", typing: true }
+      {
+        id,
+        type: "typing",
+        role: "assistant"
+      }
     ]);
 
     await delay(CHAT_TIMING.typing);
@@ -28,7 +32,12 @@ export default function useAssistantMessages() {
     setMessages(prev =>
       prev.map(msg =>
         msg.id === id
-          ? { id, sender: "assistant", text }
+          ? {
+              id,
+              type: "text",
+              role: "assistant",
+              text
+            }
           : msg
       )
     );
@@ -37,11 +46,15 @@ export default function useAssistantMessages() {
   // ------------------------
   // OPTIONS
   // ------------------------
-  const sendOptions = useCallback(async (options) => {
-
+  const sendOptions = useCallback((options) => {
     setMessages(prev => [
       ...prev,
-      { type: "options", options }
+      {
+        id: crypto.randomUUID(),
+        type: "options",
+        role: "assistant",
+        options
+      }
     ]);
   }, []);
 
@@ -49,21 +62,29 @@ export default function useAssistantMessages() {
   // USER MESSAGE
   // ------------------------
   const sendUserMessage = useCallback((text) => {
-    setMessages(prev => [...prev, { sender: "user", text }]);
+    setMessages(prev => [
+      ...prev,
+      {
+        id: crypto.randomUUID(),
+        type: "text",
+        role: "user",
+        text
+      }
+    ]);
   }, []);
 
   // ------------------------
   // CLEAR TYPING
   // ------------------------
   const clearTyping = useCallback(() => {
-    setMessages(prev => prev.filter(m => !m.typing));
+    setMessages(prev => prev.filter(m => m.type !== "typing"));
   }, []);
 
   // ------------------------
   // CLEAR OPTIONS
   // ------------------------
   const clearOptions = useCallback(() => {
-    setMessages(prev => prev.filter(m => !m.options));
+    setMessages(prev => prev.filter(m => m.type !== "options"));
   }, []);
 
   // ------------------------
