@@ -1,100 +1,60 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export default function useAssistantConversationFlow({
-  finished,
-  currentQuestion,
   sendAssistantMessage,
   sendOptions,
   clearTyping,
-  timing,
-  resetTrigger
+  timing
 }) {
+  const introDoneRef = useRef(false);
+  const lastQuestionIdRef = useRef(null);
 
-  const sessionRef = useRef(0);
-  const lastQuestionId = useRef(null);
+  const runIntro = async () => {
+    if (introDoneRef.current) return;
 
-  const [introDone, setIntroDone] = useState(false);
+    const introMessages = [
+      "Hola, soy Coffe ☕😽",
+      "Te haré unas preguntas para encontrar tu café ideal.",
+      "Vamos a ello 🔥",
+    ];
 
-  const introMessages = [
-    "Hola, soy Coffe ☕😽",
-    "Te haré unas preguntas para encontrar tu café ideal.",
-    "Vamos a ello 🔥",
-  ];
-
-  // ------------------------
-  // RESET MOTOR
-  // ------------------------
-  useEffect(() => {
-    if (resetTrigger === 0) {
-      sessionRef.current += 1;
-      lastQuestionId.current = null;
-      setIntroDone(false);
+    for (let message of introMessages) {
+      clearTyping();
+      await sendAssistantMessage(message);
+      await delay(timing.appearDelay);
     }
-  }, [resetTrigger]);
 
-  // ------------------------
-  // INTRO SECUENCIAL
-  // ------------------------
-  useEffect(() => {
-    if (introDone) return;
+    introDoneRef.current = true;
+  };
 
-    const runIntro = async () => {
-      const currentSession = sessionRef.current;
+  const runQuestion = async (question) => {
+    if (!question) return;
 
-      for (let message of introMessages) {
-        if (currentSession !== sessionRef.current) return;
+    if (lastQuestionIdRef.current === question.id) return;
+    lastQuestionIdRef.current = question.id;
 
-        clearTyping();
-        await sendAssistantMessage(message);
-        await delay(timing.appearDelay);
-      }
+    await sendAssistantMessage(question.question);
 
-      if (currentSession !== sessionRef.current) return;
+    await sendOptions(
+      question.options.map(op => ({
+        label: op.text,
+        value: op.value
+      }))
+    );
+  };
 
-      setIntroDone(true);
-    };
+  const resetFlow = () => {
+    introDoneRef.current = false;
+    lastQuestionIdRef.current = null;
+  };
 
-    runIntro();
-  }, [introDone, sendAssistantMessage, clearTyping, timing]);
-
-  // ------------------------
-  // QUESTIONS
-  // ------------------------
-  useEffect(() => {
-    if (!introDone) return;
-    if (finished) return;
-    if (!currentQuestion) return;
-
-    if (lastQuestionId.current === currentQuestion.id) return;
-
-    lastQuestionId.current = currentQuestion.id;
-
-    const runQuestion = async () => {
-      const currentSession = sessionRef.current;
-
-      await sendAssistantMessage(currentQuestion.question);
-
-      if (currentSession !== sessionRef.current) return;
-
-      await sendOptions(
-        currentQuestion.options.map(op => ({
-          label: op.text,
-          value: op.value
-        }))
-      );
-    };
-
-    runQuestion();
-
-  }, [
-    introDone,
-    currentQuestion,
-    finished,
-    sendAssistantMessage,
-    sendOptions
-  ]);
+  return {
+    runIntro,
+    runQuestion,
+    resetFlow
+  };
 }
