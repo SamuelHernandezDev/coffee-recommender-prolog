@@ -39,7 +39,7 @@ const addAnswer = (answer) => {
 
   // Saber si ya terminó correctamente
   const isFinished = (totalQuestions) => {
-    return currentQuestionIndex >= totalQuestions - 1;
+    return answers.length >= totalQuestions;
   };
 
   // Reset automático al cambiar nivel

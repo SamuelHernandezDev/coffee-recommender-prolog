@@ -7,6 +7,7 @@ import RecommendationCard from "../components/chatbox/RecommendationCard";
 import useChatFlow from "../hooks/useChatFlow";
 import useAssistantMessages from "../hooks/assistant/useAssistantMessages";
 import useAssistantConversationFlow from "../hooks/assistant/useAssistantConversationFlow";
+import useRecommendationEngine from "../hooks/useRecommendationEngine";
 import "../styles/globals/background.css";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -17,8 +18,14 @@ export default function Assistant() {
     currentQuestion,
     finished,
     submitAnswer,
-    recommendation
+    answers
   } = useChatFlow();
+
+  const {
+    recommendation,
+    generateRecommendation,
+    resetRecommendation
+  } = useRecommendationEngine();
 
   const { 
     restartQuestionnaire, 
@@ -71,6 +78,15 @@ export default function Assistant() {
     run();
   
   }, [conversationState, currentQuestion, finished]);
+
+  useEffect(() => {
+
+    if (!finished) return;
+    if (!answers || answers.length === 0) return;
+  
+    generateRecommendation(answers);
+  
+  }, [finished]);
     
   function handleSelect(value, label) {
     if (!currentQuestion) return;
