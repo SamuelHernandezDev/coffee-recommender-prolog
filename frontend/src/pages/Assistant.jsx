@@ -15,6 +15,16 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Assistant() {
   const navigate = useNavigate();
 
+  const { level } = useUserAnswers();
+
+  const levelLabelMap = {
+    beginner: "Principiante",
+    intermediate: "Intermedio",
+    expert: "Experto",
+  };
+
+  const levelLabel = level ? levelLabelMap[level] : null;
+
   const {
     currentQuestion,
     finished,
@@ -51,6 +61,8 @@ export default function Assistant() {
     clearTyping,
     timing: CHAT_TIMING
   });
+  
+  const [isChatCollapsed, setIsChatCollapsed] = useState(false);
 
   const [conversationState, setConversationState] = useState("intro");
 
@@ -88,6 +100,12 @@ export default function Assistant() {
     generateRecommendation(answers);
   
   }, [finished, answers]);
+
+  useEffect(() => {
+    if (finished) {
+      setTimeout(() => setIsChatCollapsed(true), 150);
+    }
+  }, [finished]);
     
   function handleSelect(value, label) {
     if (!currentQuestion) return;
@@ -140,13 +158,16 @@ export default function Assistant() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <ChatBox
-            messages={messages}
-            onSelect={handleSelect}
-            collapse={finished}
-          />
+        <ChatBox
+          messages={messages}
+          onSelect={handleSelect}
+          collapsed={isChatCollapsed}
+          onToggleCollapse={() =>
+            setIsChatCollapsed(prev => !prev)
+          }
+          levelLabel={levelLabel}
+        />
         </motion.div>
-
         <AnimatePresence>
           {finished && recommendation && (
             <motion.div
