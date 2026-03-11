@@ -1,4 +1,6 @@
+// frontend\src\hooks\assistant\useAssistantMessages.js
 import { useState, useCallback } from "react";
+import { createMessage } from "../../utils/chat/messageFactory";
 
 const CHAT_TIMING = {
   typing: 1200,
@@ -16,16 +18,15 @@ export default function useAssistantMessages() {
   // ASSISTANT MESSAGE
   // ------------------------
   const sendAssistantMessage = useCallback(async (text) => {
-    const id = crypto.randomUUID();
 
-    setMessages(prev => [
-      ...prev,
-      {
-        id,
-        type: "typing",
-        role: "assistant"
-      }
-    ]);
+    const typingMessage = createMessage({
+      role: "assistant",
+      type: "typing"
+    });
+
+    const id = typingMessage.id;
+
+    setMessages(prev => [...prev, typingMessage]);
 
     await delay(CHAT_TIMING.typing);
 
@@ -33,44 +34,46 @@ export default function useAssistantMessages() {
       prev.map(msg =>
         msg.id === id
           ? {
-              id,
+              ...msg,
               type: "text",
-              role: "assistant",
-              text
+              content: { text }
             }
           : msg
       )
     );
+
   }, []);
 
   // ------------------------
   // OPTIONS
   // ------------------------
   const sendOptions = useCallback((options) => {
+
     setMessages(prev => [
       ...prev,
-      {
-        id: crypto.randomUUID(),
-        type: "options",
+      createMessage({
         role: "assistant",
-        options
-      }
+        type: "options",
+        content: { options }
+      })
     ]);
+
   }, []);
 
   // ------------------------
   // USER MESSAGE
   // ------------------------
   const sendUserMessage = useCallback((text) => {
+
     setMessages(prev => [
       ...prev,
-      {
-        id: crypto.randomUUID(),
-        type: "text",
+      createMessage({
         role: "user",
-        text
-      }
+        type: "text",
+        content: { text }
+      })
     ]);
+
   }, []);
 
   // ------------------------
