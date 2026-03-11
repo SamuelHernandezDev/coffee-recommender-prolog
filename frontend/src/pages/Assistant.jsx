@@ -1,3 +1,4 @@
+// frontend\src\pages\Assistant.jsx
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -86,7 +87,7 @@ export default function Assistant() {
   
     generateRecommendation(answers);
   
-  }, [finished]);
+  }, [finished, answers]);
     
   function handleSelect(value, label) {
     if (!currentQuestion) return;

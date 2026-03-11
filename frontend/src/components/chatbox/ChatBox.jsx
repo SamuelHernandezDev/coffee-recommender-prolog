@@ -1,3 +1,4 @@
+// frontend\src\components\chatbox\ChatBox.jsx
 import React, { useRef, useState, useEffect } from "react";
 import ChatMessage from "./chatMessage";
 import { useUserAnswers } from "../../context/UserAnswersContext";
