@@ -3,7 +3,6 @@ import useChatStore from "../chat/useChatStore";
 import useChatActions from "../chat/useChatActions";
 
 const CHAT_TIMING = Object.freeze({
-  typing: 1200,
   appearDelay: 80
 });
 
