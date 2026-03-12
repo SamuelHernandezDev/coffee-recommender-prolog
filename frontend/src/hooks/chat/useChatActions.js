@@ -1,5 +1,6 @@
 // frontend/src/hooks/chat/useChatActions.js
 import { useCallback } from "react";
+import { calculateTypingDelay } from "../../utils/chat/calculateTypingDelay";
 import { createMessage } from "../../utils/chat/messageFactory";
 
 function delay(ms) {
@@ -23,6 +24,8 @@ export default function useChatActions(store, timing) {
     });
 
     addMessage(typingMessage);
+
+    const typingDelay = calculateTypingDelay(text);
 
     await delay(typingDelay);
 
