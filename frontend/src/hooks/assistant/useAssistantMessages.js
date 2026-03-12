@@ -1,6 +1,6 @@
 // frontend\src\hooks\assistant\useAssistantMessages.js
-import useChatStore from "./useChatStore";
-import useChatActions from "./useChatActions";
+import useChatStore from "../chat/useChatStore";
+import useChatActions from "../chat/useChatActions";
 
 const CHAT_TIMING = Object.freeze({
   typing: 1200,

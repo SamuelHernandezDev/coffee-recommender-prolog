@@ -1,5 +1,6 @@
+// frontend\src\hooks\recommendation\useRecommendationEngine.js
 import { useState } from "react";
-import usePrologApi from "./usePrologAPI";
+import usePrologApi from "../api/usePrologAPI";
 
 export default function useRecommendationEngine() {
 

@@ -1,4 +1,4 @@
-// frontend/src/hooks/assistant/useChatActions.js
+// frontend/src/hooks/chat/useChatActions.js
 import { useCallback } from "react";
 import { createMessage } from "../../utils/chat/messageFactory";
 

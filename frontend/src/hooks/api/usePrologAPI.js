@@ -1,6 +1,6 @@
-// src/hooks/usePrologApi.js
+// src/hooks/api/usePrologApi.js
 import { useState } from "react";
-import { formatPrologPayload } from "../utils/formatPrologPayload";
+import { formatPrologPayload } from "../../utils/formatPrologPayload";
 
 export default function usePrologApi() {
   const [loading, setLoading] = useState(false);

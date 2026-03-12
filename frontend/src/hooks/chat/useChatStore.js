@@ -1,4 +1,4 @@
-// frontend\src\hooks\assistant\useChatStore.js
+// frontend\src\hooks\chat\useChatStore.js
 import { useState, useCallback } from "react";
 
 export default function useChatStore() {

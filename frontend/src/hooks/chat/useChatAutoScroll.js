@@ -1,4 +1,4 @@
-// frontend\src\hooks\assistant\useChatAutoScroll.js
+// frontend\src\hooks\chat\useChatAutoScroll.js
 import { useEffect } from "react";
 
 export default function useChatAutoScroll(
