@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useUserAnswers } from "../context/UserAnswersContext";
 import ChatBox from "../components/chatbox/ChatBox";
 import RecommendationCard from "../components/chatbox/RecommendationCard";
+import useConversationEngine from "../hooks/assistant/useConversationEngine";
 import useChatFlow from "../hooks/useChatFlow";
 import useAssistantMessages from "../hooks/assistant/useAssistantMessages";
 import useAssistantConversationFlow from "../hooks/assistant/useAssistantConversationFlow";
@@ -35,13 +36,11 @@ export default function Assistant() {
   const {
     recommendation,
     generateRecommendation,
-    resetRecommendation
   } = useRecommendationEngine();
 
   const { 
     restartQuestionnaire, 
     resetFlow,
-    currentQuestionIndex   
   } = useUserAnswers();
   
   const {
@@ -64,33 +63,20 @@ export default function Assistant() {
   
   const [isChatCollapsed, setIsChatCollapsed] = useState(false);
 
-  const [conversationState, setConversationState] = useState("intro");
+  const conversation = useConversationEngine({ flow });
 
   useEffect(() => {
 
     if (finished) {
-      setConversationState("finished");
+      conversation.finish();
       return;
     }
   
-    const run = async () => {
+    conversation.runStep({
+      currentQuestion
+    });
   
-      if (conversationState === "intro") {
-        await flow.runIntro();
-        setConversationState("asking");
-        return;
-      }
-  
-      if (conversationState === "asking" && currentQuestion) {
-        await flow.runQuestion(currentQuestion);
-        setConversationState("waiting");
-      }
-  
-    };
-  
-    run();
-  
-  }, [conversationState, currentQuestion, finished]);
+  }, [conversation, currentQuestion, finished]);
 
   useEffect(() => {
 
@@ -113,7 +99,7 @@ export default function Assistant() {
     clearOptions();
     sendUserMessage(label);
   
-    setConversationState("asking");
+    conversation.next();
   
     submitAnswer({
       questionId: currentQuestion.id,
@@ -127,7 +113,7 @@ export default function Assistant() {
     restartQuestionnaire();
     resetMessages();
     flow.resetFlow();
-    setConversationState("intro");
+    conversation.reset();
   }
   
   function handleExit() {
