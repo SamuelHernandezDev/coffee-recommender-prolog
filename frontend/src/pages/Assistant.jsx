@@ -76,7 +76,7 @@ export default function Assistant() {
       currentQuestion
     });
   
-  }, [conversation, currentQuestion, finished]);
+  }, [conversation.step, currentQuestion, finished]);
 
   useEffect(() => {
 
