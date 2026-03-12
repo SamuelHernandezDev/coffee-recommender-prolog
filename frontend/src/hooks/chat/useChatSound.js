@@ -1,4 +1,4 @@
-// frontend\src\hooks\assistant\useChatSound.js
+// frontend\src\hooks\chat\useChatSound.js
 import { useEffect, useRef } from "react";
 
 export default function useChatSound(messages) {

@@ -1,22 +1,27 @@
 // frontend\src\pages\Assistant.jsx
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
-import { useState } from "react";
-import { useUserAnswers } from "../context/UserAnswersContext";
 import ChatBox from "../components/chatbox/ChatBox";
 import RecommendationCard from "../components/chatbox/RecommendationCard";
-import useConversationEngine from "../hooks/assistant/useConversationEngine";
-import useChatFlow from "../hooks/useChatFlow";
-import useAssistantMessages from "../hooks/assistant/useAssistantMessages";
-import useAssistantConversationFlow from "../hooks/assistant/useAssistantConversationFlow";
-import useRecommendationEngine from "../hooks/useRecommendationEngine";
-import "../styles/globals/background.css";
+import useAssistantController from "../hooks/assistant/useAssistantController";
 import { motion, AnimatePresence } from "framer-motion";
+import "../styles/globals/background.css";
 
 export default function Assistant() {
-  const navigate = useNavigate();
 
-  const { level } = useUserAnswers();
+  const navigate = useNavigate();
+  const controller = useAssistantController();
+
+  const {
+    messages,
+    handleSelect,
+    handleRestart,
+    toggleCollapse,
+    isChatCollapsed,
+    recommendation,
+    finished,
+    level,
+    resetFlow
+  } = controller;
 
   const levelLabelMap = {
     beginner: "Principiante",
@@ -26,96 +31,6 @@ export default function Assistant() {
 
   const levelLabel = level ? levelLabelMap[level] : null;
 
-  const {
-    currentQuestion,
-    finished,
-    submitAnswer,
-    answers
-  } = useChatFlow();
-
-  const {
-    recommendation,
-    generateRecommendation,
-  } = useRecommendationEngine();
-
-  const { 
-    restartQuestionnaire, 
-    resetFlow,
-  } = useUserAnswers();
-  
-  const {
-    messages,
-    sendAssistantMessage,
-    sendUserMessage,
-    sendOptions,
-    clearTyping,
-    clearOptions,
-    resetMessages,
-    CHAT_TIMING
-  } = useAssistantMessages();
-
-  const flow = useAssistantConversationFlow({
-    sendAssistantMessage,
-    sendOptions,
-    clearTyping,
-    timing: CHAT_TIMING
-  });
-  
-  const [isChatCollapsed, setIsChatCollapsed] = useState(false);
-
-  const conversation = useConversationEngine({ flow });
-
-  useEffect(() => {
-
-    if (finished) {
-      conversation.finish();
-      return;
-    }
-  
-    conversation.runStep({
-      currentQuestion
-    });
-  
-  }, [conversation.step, currentQuestion, finished]);
-
-  useEffect(() => {
-
-    if (!finished) return;
-    if (!answers || answers.length === 0) return;
-  
-    generateRecommendation(answers);
-  
-  }, [finished, answers]);
-
-  useEffect(() => {
-    if (finished) {
-      setTimeout(() => setIsChatCollapsed(true), 150);
-    }
-  }, [finished]);
-    
-  function handleSelect(value, label) {
-    if (!currentQuestion) return;
-  
-    clearOptions();
-    sendUserMessage(label);
-  
-    conversation.next();
-  
-    submitAnswer({
-      questionId: currentQuestion.id,
-      questionText: currentQuestion.question,
-      value,
-      label
-    });
-  }
-  
-  function handleRestart() {
-    restartQuestionnaire();
-    resetMessages();
-    flow.resetFlow();
-    conversation.reset();
-  }
-  
   function handleExit() {
     resetFlow();
     navigate("/");
@@ -144,18 +59,21 @@ export default function Assistant() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-        <ChatBox
-          messages={messages}
-          onSelect={handleSelect}
-          collapsed={isChatCollapsed}
-          onToggleCollapse={() =>
-            setIsChatCollapsed(prev => !prev)
-          }
-          levelLabel={levelLabel}
-        />
+
+          <ChatBox
+            messages={messages}
+            onSelect={handleSelect}
+            collapsed={isChatCollapsed}
+            onToggleCollapse={toggleCollapse}
+            levelLabel={levelLabel}
+          />
+
         </motion.div>
+
         <AnimatePresence>
+
           {finished && recommendation && (
+
             <motion.div
               className="mt-10"
               initial={{ scale: 0.8, y: 30 }}
@@ -163,13 +81,17 @@ export default function Assistant() {
               exit={{ scale: 0.95 }}
               transition={{ type: "spring", stiffness: 100, damping: 10 }}
             >
+
               <RecommendationCard
                 coffee={recommendation}
                 onRestart={handleRestart}
                 onExit={handleExit}
               />
+
             </motion.div>
+
           )}
+
         </AnimatePresence>
 
       </div>

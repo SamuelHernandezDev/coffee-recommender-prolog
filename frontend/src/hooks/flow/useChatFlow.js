@@ -1,11 +1,11 @@
-// frontend\src\hooks\useChatFlow.js
+// frontend\src\hooks\flow\useChatFlow.js
 import { useEffect, useMemo, useState } from "react";
-import { useUserAnswers } from "../context/UserAnswersContext";
+import { useUserAnswers } from "../../context/UserAnswersContext";
 
 // Importa tus bancos de preguntas
-import questionsBeginner from "../data/assistant/questionsBeginner";
-import questionsIntermediate from "../data/assistant/questionsIntermediate";
-import questionsExpert from "../data/assistant/questionsExpert";
+import questionsBeginner from "../../data/assistant/questionsBeginner";
+import questionsIntermediate from "../../data/assistant/questionsIntermediate";
+import questionsExpert from "../../data/assistant/questionsExpert";
 
 export default function useChatFlow() {
   const {

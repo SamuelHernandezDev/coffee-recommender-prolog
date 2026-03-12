@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import ChatMessage from "./chatMessage";
-import useChatSound from "../../hooks/assistant/useChatSound";
-import useChatAutoScroll from "../../hooks/assistant/useChatAutoScroll";
+import useChatSound from "../../hooks/chat/useChatSound";
+import useChatAutoScroll from "../../hooks/chat/useChatAutoScroll";
 import "../../styles/features/chatbox/ChatBox.css";
 
 export default function ChatBox({
