@@ -34,13 +34,15 @@ export default function useAssistantConversationFlow({
 
   const runQuestion = async (question) => {
     if (!question) return;
-
+  
+    if (!introDoneRef.current) return;
+  
     if (lastQuestionIdRef.current === question.id) return;
     lastQuestionIdRef.current = question.id;
-
+  
     await sendAssistantMessage(question.question);
-
-    await sendOptions(
+  
+    sendOptions(
       question.options.map(op => ({
         label: op.text,
         value: op.value
