@@ -1,9 +1,7 @@
 // frontend\src\hooks\assistant\useAssistantConversationFlow.js
 import { useRef } from "react";
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import { introScript } from "../../scripts/conversation/introScript";
+import { runScript } from "../../utils/chat/runScript";
 
 export default function useAssistantConversationFlow({
   sendAssistantMessage,
@@ -15,21 +13,19 @@ export default function useAssistantConversationFlow({
   const lastQuestionIdRef = useRef(null);
 
   const runIntro = async () => {
+
     if (introDoneRef.current) return;
-
-    const introMessages = [
-      "Hola, soy Coffe ☕😽",
-      "Te haré unas preguntas para encontrar tu café ideal.",
-      "Vamos a ello 🔥",
-    ];
-
-    for (let message of introMessages) {
-      clearTyping();
-      await sendAssistantMessage(message);
-      await delay(timing.appearDelay);
-    }
-
+  
+    await runScript({
+      script: introScript,
+      sendAssistantMessage,
+      sendOptions,
+      clearTyping,
+      timing
+    });
+  
     introDoneRef.current = true;
+  
   };
 
   const runQuestion = async (question) => {
