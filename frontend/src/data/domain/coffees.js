@@ -1,3 +1,4 @@
+//frontend\src\data\domain\coffees.js
 export const coffees = [
     /* ------------------------------ CAFÉS CALIENTES ------------------------------ */
     {

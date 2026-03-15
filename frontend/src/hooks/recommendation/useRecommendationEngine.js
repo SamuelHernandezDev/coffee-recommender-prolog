@@ -1,18 +1,17 @@
-// frontend\src\hooks\recommendation\useRecommendationEngine.js
 import { useState } from "react";
-import usePrologApi from "../api/usePrologAPI";
+import { createRecommendationEngine } from "../../recommendation/RecommendationEngineFactory";
 
 export default function useRecommendationEngine() {
 
   const [recommendation, setRecommendation] = useState(null);
 
-  const { sendAnswersToProlog } = usePrologApi();
+  const engine = createRecommendationEngine("prolog");
 
   const generateRecommendation = async (answers) => {
 
     try {
 
-      const result = await sendAnswersToProlog(answers);
+      const result = await engine.generateRecommendation(answers);
 
       if (result && result.length > 0) {
         setRecommendation(result[0]);
