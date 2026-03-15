@@ -1,3 +1,4 @@
+// frontend\src\data\assistant\questionsBeginner.js
 const questionsBeginner = [
   {
     id: "b1",
