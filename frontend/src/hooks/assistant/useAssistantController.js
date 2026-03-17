@@ -7,6 +7,7 @@ import useChatFlow from "../flow/useChatFlow";
 import useAssistantMessages from "./useAssistantMessages";
 import useAssistantConversationFlow from "./useAssistantConversationFlow";
 import useRecommendationEngine from "../recommendation/useRecommendationEngine";
+import useAssistantModeManager from "./useAssistantModeManager"; 
 
 export default function useAssistantController() {
 
@@ -15,9 +16,15 @@ export default function useAssistantController() {
     finished,
     submitAnswer,
     answers,
-    mode,
-    level
+    level,
+    currentQuestionIndex
   } = useChatFlow();
+
+    const {
+      mode,
+      setAssistantMode,
+      resetMode
+    } = useAssistantModeManager();
 
   const {
     recommendation,
@@ -53,6 +60,16 @@ export default function useAssistantController() {
   const [isChatCollapsed, setIsChatCollapsed] = useState(false);
 
   // -----------------------
+  // Debug logs 
+  // -----------------------
+  useEffect(() => {
+    console.log("[ENGINE STEP]:", step);
+    console.log("[MODE]:", mode);
+    console.log("[QUESTION]:", currentQuestion?.id);
+    console.log("[INDEX]:", currentQuestionIndex);
+  }, [step, mode, currentQuestion, currentQuestionIndex]);
+
+  // -----------------------
   // Conversation 
   // -----------------------
 
@@ -77,14 +94,12 @@ export default function useAssistantController() {
 
   useEffect(() => {
 
-    if (!finished) return;
+    if (!finished || mode !== "recommendation") return;
     if (!answers || answers.length === 0) return;
 
-    if (mode === "recommendation") {
-      generateRecommendation(answers);
-    }
+    generateRecommendation(answers);
 
-  }, [finished, answers]);
+  }, [finished, answers, mode]);
 
   // -----------------------
   // Collapse chat
@@ -97,6 +112,15 @@ export default function useAssistantController() {
     }
 
   }, [finished]);
+
+  // -----------------------
+  // Helpers
+  // -----------------------
+  function handleModeSelection(questionId, value) {
+    if (questionId === "mode") {
+      setAssistantMode(value);
+    }
+  }
 
   // -----------------------
   // Handlers
@@ -114,7 +138,9 @@ export default function useAssistantController() {
   
     clearOptions();
     sendUserMessage(label);
-  
+
+    handleModeSelection(currentQuestion.id, value);
+
     submitAnswer({
       value,
       label
@@ -134,6 +160,8 @@ export default function useAssistantController() {
     flow.resetFlow();
 
     reset();
+
+    resetMode();
 
   }
 
