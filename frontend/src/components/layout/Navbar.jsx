@@ -46,6 +46,15 @@ export default function Navbar() {
             Menú
           </NavLink>
 
+          <NavLink
+            to="/assistant"
+            className={({ isActive }) =>
+              `${linkBase} ${isActive ? linkActive : linkInactive}`
+            }
+          >
+            Asistente
+          </NavLink>
+
         </div>
       </div>
     </nav>

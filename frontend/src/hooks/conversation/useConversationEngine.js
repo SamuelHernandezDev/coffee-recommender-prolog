@@ -8,6 +8,7 @@ export default function useConversationEngine({ flow }) {
   const runStep = useCallback(async (context) => {
 
     if (step === "intro") {
+      console.log("RUNNING INTRO");
       await flow.runIntro();
       setStep("asking");
       return;
@@ -15,6 +16,7 @@ export default function useConversationEngine({ flow }) {
 
     if (step === "asking") {
       if (context.currentQuestion) {
+        console.log("ASKING QUESTION:", context.currentQuestion.id);
         await flow.runQuestion(context.currentQuestion);
         setStep("waiting");
       }
@@ -22,12 +24,14 @@ export default function useConversationEngine({ flow }) {
     }
 
     if (step === "finished") {
+      console.log("FLOW FINISHED");
       return;
     }
 
   }, [step, flow]);
 
   const next = () => {
+    console.log("ENGINE NEXT → asking");
     setStep("asking");
   };
 

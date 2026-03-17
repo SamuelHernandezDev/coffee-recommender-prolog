@@ -1,3 +1,4 @@
+// frontend\src\components\chatbox\ChatBox.jsx
 import React, { useRef } from "react";
 import ChatMessage from "./chatMessage";
 import useChatSound from "../../hooks/chat/useChatSound";

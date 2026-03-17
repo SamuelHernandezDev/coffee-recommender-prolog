@@ -1,3 +1,4 @@
+// frontend\src\data\assistant\questionsIntermediate.js
 const questionsIntermediate = [
   {
     id: "i1",
@@ -8,6 +9,10 @@ const questionsIntermediate = [
       { text: "Ligero 💧", value: "light" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
   {
     id: "i2",
@@ -18,6 +23,10 @@ const questionsIntermediate = [
       { text: "Extra fuerte (3+)", value: "three_shots" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
   {
     id: "i3",
@@ -28,6 +37,10 @@ const questionsIntermediate = [
       { text: "Nada extra", value: "none" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
   {
     id: "i4",
@@ -37,8 +50,11 @@ const questionsIntermediate = [
       { text: "Moderno ✨", value: "modern" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
-
   {
     id: "i5",
     question: "¿Qué temperatura EXACTA prefieres?",
@@ -49,6 +65,10 @@ const questionsIntermediate = [
       { text: "Frío ❄️", value: "cold" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
   {
     id: "i6",
@@ -59,6 +79,10 @@ const questionsIntermediate = [
       { text: "Sin espuma 💧", value: "no_foam" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
   {
     id: "i7",
@@ -69,6 +93,10 @@ const questionsIntermediate = [
       { text: "Más leche que café", value: "more_milk" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
   {
     id: "i8",
@@ -78,6 +106,10 @@ const questionsIntermediate = [
       { text: "Tradicional ☕", value: "traditional" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "intermediate"
+    }
   },
 ];
 

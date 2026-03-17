@@ -9,6 +9,10 @@ const questionsBeginner = [
       { text: "Fuerte 🔥", value: "strong" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "beginner"
+    }
   },
   {
     id: "b2",
@@ -18,6 +22,10 @@ const questionsBeginner = [
       { text: "Frías ❄️", value: "cold" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "beginner"
+    }
   },
   {
     id: "b3",
@@ -28,6 +36,10 @@ const questionsBeginner = [
       { text: "Dulce 😋", value: "sweet" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "beginner"
+    }
   },
   {
     id: "b4",
@@ -38,6 +50,10 @@ const questionsBeginner = [
       { text: "Leche vegetal 🌱", value: "plant_milk" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "beginner"
+    }
   },
   {
     id: "b5",
@@ -48,6 +64,10 @@ const questionsBeginner = [
       { text: "Nada cremoso 💧", value: "no_creamy" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "beginner"
+    }
   },
   {
     id: "b6",
@@ -59,6 +79,10 @@ const questionsBeginner = [
       { text: "Sin sabores extra 🚫", value: "no_flavors" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "beginner"
+    }
   },
   {
     id: "b7",
@@ -69,6 +93,10 @@ const questionsBeginner = [
       { text: "Grande (menos fuerte)", value: "large" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "beginner"
+    }
   },
 ];
 

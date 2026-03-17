@@ -1,6 +1,7 @@
 // frontend\src\hooks\assistant\useAssistantController.js
 import { useEffect, useState } from "react";
 import { useUserAnswers } from "../../context/UserAnswersContext";
+
 import useConversationEngine from "../conversation/useConversationEngine";
 import useChatFlow from "../flow/useChatFlow";
 import useAssistantMessages from "./useAssistantMessages";
@@ -13,7 +14,9 @@ export default function useAssistantController() {
     currentQuestion,
     finished,
     submitAnswer,
-    answers
+    answers,
+    mode,
+    level
   } = useChatFlow();
 
   const {
@@ -23,8 +26,7 @@ export default function useAssistantController() {
 
   const {
     restartQuestionnaire,
-    resetFlow,
-    level
+    resetFlow
   } = useUserAnswers();
 
   const {
@@ -44,27 +46,30 @@ export default function useAssistantController() {
     clearTyping,
     timing: CHAT_TIMING
   });
+  
 
-  const conversation = useConversationEngine({ flow });
+  const { step, runStep, next, finish, reset } = useConversationEngine({ flow });
 
   const [isChatCollapsed, setIsChatCollapsed] = useState(false);
 
   // -----------------------
-  // Conversation step
+  // Conversation 
   // -----------------------
 
   useEffect(() => {
 
     if (finished) {
-      conversation.finish();
+      finish();
       return;
     }
 
-    conversation.runStep({
+    if (!currentQuestion) return;
+  
+    runStep({
       currentQuestion
     });
-
-  }, [conversation.step, currentQuestion, finished]);
+  
+  }, [step, currentQuestion, finished]);
 
   // -----------------------
   // Recommendation
@@ -75,7 +80,9 @@ export default function useAssistantController() {
     if (!finished) return;
     if (!answers || answers.length === 0) return;
 
-    generateRecommendation(answers);
+    if (mode === "recommendation") {
+      generateRecommendation(answers);
+    }
 
   }, [finished, answers]);
 
@@ -98,20 +105,24 @@ export default function useAssistantController() {
   function handleSelect(value, label) {
 
     if (!currentQuestion) return;
-
-    clearOptions();
-
-    sendUserMessage(label);
-
-    conversation.next();
-
-    submitAnswer({
+  
+    console.log("USER SELECTED:", {
       questionId: currentQuestion.id,
-      questionText: currentQuestion.question,
+      value,
+      label
+    });
+  
+    clearOptions();
+    sendUserMessage(label);
+  
+    submitAnswer({
       value,
       label
     });
 
+    next();
+  
+    console.log("NEXT STEP TRIGGERED");  
   }
 
   function handleRestart() {
@@ -122,7 +133,7 @@ export default function useAssistantController() {
 
     flow.resetFlow();
 
-    conversation.reset();
+    reset();
 
   }
 
