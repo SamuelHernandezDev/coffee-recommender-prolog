@@ -48,7 +48,6 @@ export default function useChatFlow() {
   
   const finished = safeIndex >= questionList.length;
 
-  const mode = answers.find(a => a.questionId === "mode")?.value;
   const level = answers.find(a => a.questionId === "level")?.value;
 
   const submitAnswer = (userResponse) => {
@@ -71,7 +70,6 @@ export default function useChatFlow() {
     totalQuestions: questionList.length,
     finished,
     answers,
-    mode,
     level,
     submitAnswer,
   };
