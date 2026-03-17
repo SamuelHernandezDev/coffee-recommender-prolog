@@ -7,8 +7,6 @@ import Menu from "./pages/Menu";
 import Assistant from "./pages/Assistant";
 import NotFound from "./pages/NotFound";
 
-import ProtectedRoute from "./components/common/ProtectedRoute";
-
 // Layout
 import Navbar from "./components/layout/Navbar";
 
@@ -44,9 +42,7 @@ export const router = createBrowserRouter([
     path: "/assistant",
     element: (
       <AppLayout>
-        <ProtectedRoute>
           <Assistant />
-        </ProtectedRoute>
       </AppLayout>
     ),
   },

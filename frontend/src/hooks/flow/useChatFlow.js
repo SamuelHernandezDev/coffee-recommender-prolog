@@ -1,61 +1,78 @@
 // frontend\src\hooks\flow\useChatFlow.js
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useEffect } from "react";
 import { useUserAnswers } from "../../context/UserAnswersContext";
 
-// Importa tus bancos de preguntas
+import questionsAssistant from "../../data/assistant/questionsAssistant";
 import questionsBeginner from "../../data/assistant/questionsBeginner";
 import questionsIntermediate from "../../data/assistant/questionsIntermediate";
 import questionsExpert from "../../data/assistant/questionsExpert";
 
 export default function useChatFlow() {
   const {
-    level,
     answers,
     addAnswer,
     currentQuestionIndex,
-    goNextQuestion,
-    isFinished,
+    goNextQuestion
   } = useUserAnswers();
 
-  // ✔ Seleccionar banco de preguntas según el nivel
+  const allQuestions = useMemo(() => [
+    ...questionsAssistant,
+    ...questionsBeginner,
+    ...questionsIntermediate,
+    ...questionsExpert
+  ], []);
+
   const questionList = useMemo(() => {
-    switch (level) {
-      case "beginner":
-        return questionsBeginner;
-      case "intermediate":
-        return questionsIntermediate;
-      case "expert":
-        return questionsExpert;
-      default:
-        return [];
+
+    return allQuestions.filter((q) => {
+
+      if (!q.dependsOn) return true;
+
+      const dependencyAnswer = answers.find(
+        a => a.questionId === q.dependsOn.question
+      );
+
+      return dependencyAnswer?.value === q.dependsOn.value;
+
+    });
+
+  }, [answers, allQuestions]);
+
+  useEffect(() => {
+    if (currentQuestionIndex >= questionList.length) {
     }
-  }, [level]);
+  }, [questionList, currentQuestionIndex]);
 
-  // Pregunta actual
-  const currentQuestion = questionList[currentQuestionIndex] || null;
-
-  // Saber si ya terminó
-  const finished = isFinished(questionList.length);
+  const safeIndex = Math.min(currentQuestionIndex, questionList.length - 1);
+  const currentQuestion = questionList[safeIndex] || null;
   
-  // Guardar respuesta y pasar a la siguiente
+  const finished = safeIndex >= questionList.length;
+
+  const mode = answers.find(a => a.questionId === "mode")?.value;
+  const level = answers.find(a => a.questionId === "level")?.value;
+
   const submitAnswer = (userResponse) => {
+
+    if (!currentQuestion) return;
+
     const finalAnswer = {
-      questionId: currentQuestion.id,      
-      question: currentQuestion.text,
-      ...userResponse,                    
+      questionId: currentQuestion.id,
+      question: currentQuestion.question,
+      ...userResponse,
     };
-  
+
     addAnswer(finalAnswer);
-    goNextQuestion(questionList.length);
+    goNextQuestion();
   };
-  
+
   return {
-    level,
     currentQuestion,
     currentQuestionIndex,
     totalQuestions: questionList.length,
     finished,
     answers,
+    mode,
+    level,
     submitAnswer,
   };
 }

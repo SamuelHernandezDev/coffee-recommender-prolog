@@ -29,12 +29,25 @@ export default function useAssistantConversationFlow({
   };
 
   const runQuestion = async (question) => {
-    if (!question) return;
+    console.log("FLOW RUN QUESTION CALLED:", question);
+    if (!question) { 
+      console.log("FLOW BLOCKED: no question");
+      return;
+    }
+
   
-    if (!introDoneRef.current) return;
-  
-    if (lastQuestionIdRef.current === question.id) return;
+    if (!introDoneRef.current) {
+      console.log("FLOW BLOCKED: intro not done");
+      return;
+    }
+
+    if (lastQuestionIdRef.current === question.id) {
+      console.log("FLOW BLOCKED: same question", question.id);
+      return;
+    }
+
     lastQuestionIdRef.current = question.id;
+    console.log("FLOW SENDING QUESTION:", question.id);
   
     await sendAssistantMessage(question.question);
   

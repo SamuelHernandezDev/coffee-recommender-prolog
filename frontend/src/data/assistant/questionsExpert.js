@@ -1,3 +1,4 @@
+// frontend\src\data\assistant\questionsExpert.js
 const questionsExpert = [
   {
     id: "e1",
@@ -9,6 +10,10 @@ const questionsExpert = [
       { text: "Afrutado 🍒", value: "fruity" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e2",
@@ -20,6 +25,10 @@ const questionsExpert = [
       { text: "Aeropress", value: "aeropress" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e3",
@@ -30,6 +39,10 @@ const questionsExpert = [
       { text: "Alto", value: "full_body" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e4",
@@ -39,8 +52,11 @@ const questionsExpert = [
       { text: "No, algo estándar", value: "regular" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
-
   {
     id: "e5",
     question: "¿Qué acidez toleras?",
@@ -50,6 +66,10 @@ const questionsExpert = [
       { text: "Alta", value: "high_acidity" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e6",
@@ -60,6 +80,10 @@ const questionsExpert = [
       { text: "Oscuro", value: "dark_roast" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e7",
@@ -71,6 +95,10 @@ const questionsExpert = [
       { text: "Limpio", value: "aftertaste_clean" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e8",
@@ -80,6 +108,10 @@ const questionsExpert = [
       { text: "Complejo (múltiples notas)", value: "complex" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e9",
@@ -90,6 +122,10 @@ const questionsExpert = [
       { text: "Experimental", value: "experimental" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
   {
     id: "e10",
@@ -100,6 +136,10 @@ const questionsExpert = [
       { text: "Ligero 🌿", value: "light_caffeine" },
     ],
     type: "choice",
+    dependsOn: {
+      question: "level",
+      value: "expert"
+    }
   },
 ];
 
