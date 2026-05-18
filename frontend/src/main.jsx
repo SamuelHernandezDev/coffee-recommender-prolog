@@ -1,13 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./router";
+//frontend\src\main.jsx
+import React from 'react';
 
-import { UserAnswersProvider } from "./context/UserAnswersContext";
+import ReactDOM from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router';
 
-import "./index.css";
+import { UserAnswersProvider } from './context/UserAnswersContext';
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <UserAnswersProvider>
       <RouterProvider router={router} />

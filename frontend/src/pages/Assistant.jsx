@@ -1,99 +1,81 @@
 // frontend\src\pages\Assistant.jsx
-import { useNavigate } from "react-router-dom";
-import ChatBox from "../components/chatbox/ChatBox";
-import RecommendationCard from "../components/chatbox/RecommendationCard";
-import useAssistantController from "../hooks/assistant/useAssistantController";
-import { motion, AnimatePresence } from "framer-motion";
-import "../styles/globals/background.css";
+import { useNavigate } from 'react-router-dom';
+import ChatBox from '../components/chatbox/ChatBox';
+import RecommendationCard from '../components/chatbox/RecommendationCard';
+import useAssistantController from '../hooks/assistant/useAssistantController';
+import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Assistant() {
-
   const navigate = useNavigate();
   const controller = useAssistantController();
 
   const {
     messages,
     handleSelect,
+    handleUserInput,
     handleRestart,
     toggleCollapse,
     isChatCollapsed,
     recommendation,
+    showRecommendationCard,
     finished,
     level,
-    resetFlow
+    resetFlow,
+    mode,
   } = controller;
 
   const levelLabelMap = {
-    beginner: "Principiante",
-    intermediate: "Intermedio",
-    expert: "Experto",
+    beginner: 'Principiante',
+    intermediate: 'Intermedio',
+    expert: 'Experto',
   };
 
   const levelLabel = level ? levelLabelMap[level] : null;
 
   function handleExit() {
     resetFlow();
-    navigate("/");
+    navigate('/');
   }
 
   return (
-    <div className="relative min-h-[100dvh] flex flex-col items-center justify-center px-4 pb-20">
-
-      <video
-        src="/videos/Barra.mp4"
-        className="fixed inset-0 w-full h-[100dvh] object-cover"
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
-
-      <div className="bg-overlay" />
-      <div className="bg-bottom-fade" />
-
-      <div className="relative z-10 w-full max-w-2xl mt-32 mb-10">
-
+    <div className="relative h-full bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white px-4">
+      {/* CONTENT */}
+      <div className="max-w-2xl mx-auto min-h-[80vh] flex flex-col justify-center pt-16 sm:pt-30">
         <motion.div
-          className="backdrop-blur-md bg-black/30 rounded-3xl p-4 border border-white/20 shadow-xl"
+          className="backdrop-blur-md bg-white/5 rounded-3xl p-4 border border-white/10 shadow-xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
         >
-
           <ChatBox
             messages={messages}
             onSelect={handleSelect}
+            onSendText={handleUserInput}
+            allowTextInput={mode === 'knowledge'}
             collapsed={isChatCollapsed}
             onToggleCollapse={toggleCollapse}
             levelLabel={levelLabel}
           />
-
         </motion.div>
 
         <AnimatePresence>
-
-          {finished && recommendation && (
-
-            <motion.div
-              className="mt-10"
-              initial={{ scale: 0.8, y: 30 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95 }}
-              transition={{ type: "spring", stiffness: 100, damping: 10 }}
-            >
-
-              <RecommendationCard
-                coffee={recommendation}
-                onRestart={handleRestart}
-                onExit={handleExit}
-              />
-
-            </motion.div>
-
-          )}
-
+          {mode === 'recommendation' &&
+            showRecommendationCard &&
+            recommendation && (
+              <motion.div
+                className="mt-8"
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.95 }}
+                transition={{ type: 'spring', stiffness: 100, damping: 12 }}
+              >
+                <RecommendationCard
+                  coffee={recommendation}
+                  onRestart={handleRestart}
+                  onExit={handleExit}
+                />
+              </motion.div>
+            )}
         </AnimatePresence>
-
       </div>
     </div>
   );

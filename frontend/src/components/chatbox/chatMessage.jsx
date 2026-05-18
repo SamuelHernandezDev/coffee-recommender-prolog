@@ -1,12 +1,11 @@
 // frontend\src\components\chatbox\chatMessage.jsx
-import TypingIndicator from "./TypingIndicator";
-import OptionButton from "../common/OptionButton";
+import TypingIndicator from './TypingIndicator';
+import OptionButton from '../common/OptionButton';
 
 export default function ChatMessage({ message, onSelect }) {
-
-  if (message.type === "options" && message.content?.options) {
+  if (message.type === 'options' && message.content?.options) {
     return (
-      <div className="w-full mt-3 flex flex-col gap-3 items-start">
+      <div className="w-full mt-3 flex flex-wrap gap-2 justify-center">
         {message.content.options.map((opt, i) => (
           <OptionButton
             key={i}
@@ -21,12 +20,10 @@ export default function ChatMessage({ message, onSelect }) {
   return (
     <div
       className={`chat-bubble ${
-        message.role === "user" ? "user" : "assistant"
+        message.role === 'user' ? 'user' : 'assistant'
       }`}
     >
-      {message.type === "typing"
-        ? <TypingIndicator />
-        : message.content?.text}
+      {message.type === 'typing' ? <TypingIndicator /> : message.content?.text}
     </div>
   );
 }

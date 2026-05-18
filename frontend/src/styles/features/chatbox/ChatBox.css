@@ -11,12 +11,12 @@
   cursor: pointer;
   user-select: none;
   background: transparent;
-  color:#87ffcf;
+  color: #87ffcf;
 }
 
 .chatbox-title {
   font-size: 14px;
-  font-weight: 600; 
+  font-weight: 600;
   letter-spacing: 0.02em;
   opacity: 0.7;
 }
@@ -27,7 +27,6 @@
   margin: 0 8px;
   white-space: nowrap;
 }
-
 
 .chatbox-chevron {
   font-size: 16px;
@@ -56,6 +55,48 @@
   overflow-y: hidden;
 }
 
+.chatbox-input {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.chatbox-input-field {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  outline: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.chatbox-input-field::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.chatbox-input-field:focus {
+  border-color: rgba(135, 255, 207, 0.5);
+  box-shadow: 0 0 0 1px rgba(135, 255, 207, 0.3);
+}
+
+.chatbox-send-btn {
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(135, 255, 207, 0.1);
+  color: #87ffcf;
+  border: 1px solid rgba(135, 255, 207, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chatbox-send-btn:hover {
+  background: rgba(135, 255, 207, 0.2);
+  box-shadow: 0 0 8px rgba(135, 255, 207, 0.3);
+}
+
 .chat-bubble {
   max-width: 75%;
   padding: 10px 14px;
@@ -67,7 +108,7 @@
 }
 
 .chat-bubble.assistant {
-  background: #f1f5f9;
+  background: #000000;
   align-self: flex-start;
 }
 
@@ -97,7 +138,7 @@
 }
 
 .chatbox-container::-webkit-scrollbar-thumb {
-  background-color: rgba(135, 255, 207, 0.35); 
+  background-color: rgba(135, 255, 207, 0.35);
   border-radius: 10px;
   transition: background-color 0.2s ease;
 }
@@ -105,4 +146,3 @@
 .chatbox-container::-webkit-scrollbar-thumb:hover {
   background-color: rgba(135, 255, 207, 0.6);
 }
-

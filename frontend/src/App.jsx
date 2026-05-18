@@ -1,12 +1,13 @@
-import { Outlet } from "react-router-dom";
-import Navbar from "./components/layout/Navbar";
+//frontend\src\App.jsx
+import { Outlet } from 'react-router-dom';
+import Navbar from './components/layout/Navbar';
 
 export default function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="h-screen flex flex-col overflow-hidden">
       <Navbar />
 
-      <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-6">
+      <main className="flex-1 overflow-auto">
         <Outlet />
       </main>
     </div>

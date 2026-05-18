@@ -14,6 +14,12 @@ export default function useConversationEngine({ flow }) {
       return;
     }
 
+    if (step === "mode_intro") {
+      await flow.runModeIntro(context.mode);
+      setStep("asking");
+      return;
+    }
+
     if (step === "asking") {
       if (context.currentQuestion) {
         console.log("ASKING QUESTION:", context.currentQuestion.id);
@@ -29,6 +35,11 @@ export default function useConversationEngine({ flow }) {
     }
 
   }, [step, flow]);
+
+  const goToModeIntro = () => {
+    console.log("ENGINE → mode_intro");
+    setStep("mode_intro");
+  };
 
   const next = () => {
     console.log("ENGINE NEXT → asking");
@@ -48,6 +59,7 @@ export default function useConversationEngine({ flow }) {
     runStep,
     next,
     finish,
-    reset
+    reset,
+    goToModeIntro
   };
 }

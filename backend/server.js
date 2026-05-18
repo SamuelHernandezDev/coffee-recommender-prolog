@@ -1,58 +1,102 @@
 // backend/server.js
-const express = require("express");
-const cors = require("cors");
-const { spawn } = require("child_process");
+require('dotenv').config();
+
+const express = require('express');
+const cors = require('cors');
+
+const openai = require('./openai');
+
+const coffees = require('./data/domain/coffees');
+
+const buildKnowledgePrompt = require('./promts/knowledge.prompt');
+
+const buildRecommendationPrompt = require('./promts/recommendation.prompt');
 
 const app = express();
+
 app.use(cors());
+
 app.use(express.json());
 
-app.post("/prolog/recommend", async (req, res) => {
+app.post('/api/assistant', async (req, res) => {
   try {
-    const predicates = req.body.predicates || []; // array of strings like "strength(mild)"
-    // spawn swipl
-    const swipl = spawn("swipl", [
-      "-q",
-      "-s",
-      "prolog/Knowledge.pl",  // ← ESTA ES LA RUTA CORRECTA
-      "-g",
-      "main",
-      "-t",
-      "halt."
-    ]);    
+    const { mode, answers, message } = req.body;
 
-    // collect stdout
-    let out = "";
-    let err = "";
+    console.log('REQUEST:', req.body);
 
-    swipl.stdout.on("data", (data) => { out += data.toString(); });
-    swipl.stderr.on("data", (data) => { err += data.toString(); });
+    // -----------------------
+    // KNOWLEDGE MODE
+    // -----------------------
 
-    swipl.on("close", (code) => {
-      if (err) {
-        console.error("SWI-Prolog stderr:", err);
-      }
-      if (!out) {
-        return res.status(500).json({ error: "No output from Prolog", stderr: err });
-      }
-      try {
-        // Prolog prints JSON, parse it
-        const result = JSON.parse(out);
-        return res.json(result);
-      } catch (e) {
-        return res.status(500).json({ error: "Invalid JSON from Prolog", raw: out, stderr: err });
-      }
+    if (mode === 'knowledge') {
+      const prompt = buildKnowledgePrompt(message);
+
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4.1-mini',
+
+        messages: [
+          {
+            role: 'system',
+            content: prompt,
+          },
+        ],
+      });
+
+      const reply = completion.choices[0].message.content;
+
+      return res.json({
+        type: 'message',
+        message: reply,
+      });
+    }
+
+    // -----------------------
+    // RECOMMENDATION MODE
+    // -----------------------
+
+    if (mode === 'recommendation') {
+      const prompt = buildRecommendationPrompt(answers, coffees);
+
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4.1-mini',
+
+        messages: [
+          {
+            role: 'system',
+            content: prompt,
+          },
+        ],
+      });
+
+      const raw = completion.choices[0].message.content;
+
+      console.log('RAW AI RESPONSE:', raw);
+
+      const parsed = JSON.parse(raw);
+
+      return res.json({
+        type: 'recommendation',
+
+        recommendation: {
+          id: parsed.coffeeId,
+        },
+      });
+    }
+
+    return res.status(400).json({
+      error: 'Invalid mode',
     });
+  } catch (error) {
+    console.error(error);
 
-    // write JSON input to stdin of swipl
-    const input = JSON.stringify({ predicates });
-    swipl.stdin.write(input);
-    swipl.stdin.end();
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: e.message });
+    return res.status(500).json({
+      error: 'Internal server error',
+    });
   }
 });
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => console.log("Server listening on", PORT));
+
+app.listen(PORT, () => {
+  console.log('Server listening on', PORT);
+});

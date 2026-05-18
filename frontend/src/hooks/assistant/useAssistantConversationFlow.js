@@ -1,6 +1,9 @@
 // frontend\src\hooks\assistant\useAssistantConversationFlow.js
 import { useRef } from "react";
 import { introScript } from "../../scripts/conversation/introScript";
+import { introScriptKnowledge } from "../../scripts/conversation/introScriptKnowledge";
+import { introScriptRecommendation } from "../../scripts/conversation/introScriptRecommendation";
+
 import { runScript } from "../../utils/chat/runScript";
 
 export default function useAssistantConversationFlow({
@@ -10,6 +13,7 @@ export default function useAssistantConversationFlow({
   timing
 }) {
   const introDoneRef = useRef(false);
+  const modeIntroDoneRef = useRef(false);
   const lastQuestionIdRef = useRef(null);
 
   const runIntro = async () => {
@@ -28,27 +32,49 @@ export default function useAssistantConversationFlow({
   
   };
 
+  const runModeIntro = async (mode) => {
+
+    if (modeIntroDoneRef.current) return;
+  
+    console.log("RUN MODE INTRO:", mode);
+  
+    let script = null;
+  
+    if (mode === "knowledge") {
+      script = introScriptKnowledge;
+    }
+  
+    if (mode === "recommendation") {
+      script = introScriptRecommendation;
+    }
+  
+    if (!script) return;
+  
+    await runScript({
+      script,
+      sendAssistantMessage,
+      sendOptions,
+      clearTyping,
+      timing
+    });
+  
+    modeIntroDoneRef.current = true;
+  };
+
   const runQuestion = async (question) => {
-    console.log("FLOW RUN QUESTION CALLED:", question);
     if (!question) { 
-      console.log("FLOW BLOCKED: no question");
       return;
     }
 
-  
     if (!introDoneRef.current) {
-      console.log("FLOW BLOCKED: intro not done");
       return;
     }
 
     if (lastQuestionIdRef.current === question.id) {
-      console.log("FLOW BLOCKED: same question", question.id);
       return;
     }
 
     lastQuestionIdRef.current = question.id;
-    console.log("FLOW SENDING QUESTION:", question.id);
-  
     await sendAssistantMessage(question.question);
   
     sendOptions(
@@ -61,11 +87,13 @@ export default function useAssistantConversationFlow({
 
   const resetFlow = () => {
     introDoneRef.current = false;
+    modeIntroDoneRef.current = false;
     lastQuestionIdRef.current = null;
   };
 
   return {
     runIntro,
+    runModeIntro,
     runQuestion,
     resetFlow
   };

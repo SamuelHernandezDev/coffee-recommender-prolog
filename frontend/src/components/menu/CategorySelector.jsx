@@ -1,23 +1,42 @@
+//frontend\src\components\menu\CategorySelector.jsx
 export default function CategorySelector({ categories, active, onChange }) {
   return (
-    <div className="
-      flex gap-3 mb-5
-      overflow-x-auto scroll-hidden
-      justify-start sm:justify-center
-      px-2
-    ">
-      {categories.map(({ key, label, color }) => (
+    <div
+      className="
+        flex gap-3 mb-5
+        overflow-x-auto scroll-hidden
+        justify-start sm:justify-center
+        px-2
+      "
+    >
+      {categories.map(({ key, label, color, icon: Icon }) => (
         <button
           key={key}
           onClick={() => onChange(key)}
           className={`
-            shrink-0 px-3 py-2 rounded-full font-semibold transition
-            ${active === key
-              ? `${color} text-white`
-              : "bg-white/20 text-gray-100"}
+            group shrink-0 flex items-center gap-2
+            px-4 py-2 rounded-full font-semibold transition-all duration-200
+            ${
+              active === key
+                ? `${color} text-white shadow-md`
+                : 'bg-white/10 text-gray-200 hover:bg-white/20'
+            }
           `}
         >
-          {label}
+          {/* ICONO */}
+          <Icon
+            className={`
+              w-4 h-4 transition
+              ${
+                active === key
+                  ? 'scale-110'
+                  : 'opacity-80 group-hover:scale-105'
+              }
+            `}
+          />
+
+          {/* TEXTO */}
+          <span className="whitespace-nowrap">{label}</span>
         </button>
       ))}
     </div>

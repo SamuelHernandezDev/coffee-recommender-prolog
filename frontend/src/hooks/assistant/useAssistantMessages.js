@@ -3,7 +3,7 @@ import useChatStore from "../chat/useChatStore";
 import useChatActions from "../chat/useChatActions";
 
 const CHAT_TIMING = Object.freeze({
-  appearDelay: 80
+  appearDelay: 400
 });
 
 export default function useAssistantMessages() {

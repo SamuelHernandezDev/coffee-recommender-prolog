@@ -1,26 +1,30 @@
-import { useState } from "react";
-import { createRecommendationEngine } from "../../recommendation/RecommendationEngineFactory";
+// frontend\src\hooks\recommendation\useRecommendationEngine.js
+import { useState } from 'react';
+
+import { sendAssistantRequest } from '../../services/assistantApi';
+
+import { formatRecommendationAnswers } from '../../utils/formatRecommendationAnswers';
 
 export default function useRecommendationEngine() {
-
   const [recommendation, setRecommendation] = useState(null);
 
-  const engine = createRecommendationEngine("prolog");
-
   const generateRecommendation = async (answers) => {
-
     try {
+      const formattedAnswers = formatRecommendationAnswers(answers);
 
-      const result = await engine.generateRecommendation(answers);
+      console.log('FORMATTED ANSWERS:', formattedAnswers);
 
-      if (result && result.length > 0) {
-        setRecommendation(result[0]);
+      const response = await sendAssistantRequest({
+        mode: 'recommendation',
+        answers: formattedAnswers,
+      });
+
+      if (response.type === 'recommendation' && response.recommendation) {
+        setRecommendation(response.recommendation);
       }
-
     } catch (error) {
-      console.error("Recommendation error:", error);
+      console.error('Recommendation error:', error);
     }
-
   };
 
   const resetRecommendation = () => {
@@ -30,7 +34,6 @@ export default function useRecommendationEngine() {
   return {
     recommendation,
     generateRecommendation,
-    resetRecommendation
+    resetRecommendation,
   };
-
 }

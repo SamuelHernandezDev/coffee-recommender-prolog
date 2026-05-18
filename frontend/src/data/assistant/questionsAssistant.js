@@ -1,3 +1,4 @@
+// frontend\src\data\assistant\questionsAssistant.js
 const questionsAssistant = [
   {
     id: "mode",
@@ -6,7 +7,7 @@ const questionsAssistant = [
       { text: "☕ Recibir una recomendación de café", value: "recommendation" },
       { text: "📚 Aprender sobre café", value: "knowledge" }
     ]
-    // 👈 SIN dependsOn → siempre aparece
+  
   },
   {
     id: "level",

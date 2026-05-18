@@ -1,140 +1,124 @@
 // frontend\src\pages\Home.jsx
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import Lottie from "lottie-react";
-import "../styles/globals/background.css";
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import logo from '../assets/images/Logo.png';
+import { Bot, Coffee, Globe, Sparkles } from 'lucide-react';
 
 export default function Home() {
   const navigate = useNavigate();
 
   function startAssistant() {
-    navigate("/assistant");
+    navigate('/assistant');
+  }
+
+  function goMenu() {
+    navigate('/menu');
   }
 
   return (
-    <div
-      className="
-        relative min-h-[100dvh] 
-        flex flex-col items-center justify-center
-        text-center px-4 pb-16 md:pb-0
-      "
-    >
-
-      {/* ---- VIDEO DE FONDO ---- */}
-      <video 
-        src="/videos/cafeteria.mp4"
-        className="fixed inset-0 w-full h-[100dvh] min-h-[100dvh] object-cover"
-        autoPlay 
-        muted 
-        loop 
-        playsInline 
-      />
-
-      {/* ---- OVERLAY DESDE CSS ---- */}
-      <div className="bg-overlay" />
-      <div className="bg-bottom-fade"></div>
-
-      {/* ---- CÍRCULOS DE COLOR ---- */}
-      <div
-        className="
-          absolute top-20 left-10 w-72 h-72 
-          bg-amber-300 rounded-full 
-          mix-blend-multiply filter blur-3xl opacity-30 
-          -z-10
-        "
-      />
-
-      <div
-        className="
-          absolute bottom-20 right-10 w-72 h-72 
-          bg-emerald-300 rounded-full 
-          mix-blend-multiply filter blur-3xl opacity-30 
-          -z-10
-        "
-      />
-
-      {/* ---- CONTENIDO ---- */}
-      <div
-        className="
-          relative z-10 
-          min-h-[80vh] 
-          flex flex-col items-center justify-center 
-          text-center px-4 pb-16 md:pb-0
-        "
-      >
-
-        {/* ---- HERO ---- */}
-        <div
-          className="
-            flex flex-col md:flex-row 
-            items-center 
-            gap-10 md:gap-20 
-            mt-32 md:mt-10
-          "
-        >
-
-          {/* ---- TÍTULOS ---- */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            <h1 className="text-5xl sm:text-7xl font-extrabold text-white tracking-tight drop-shadow-2xl">
-              ESPRESSO<span className="text-emerald-300">.NET</span>
-            </h1>
-
-            <motion.p
-              className="text-emerald-300 mt-2 text-sm sm:text-lg font-mono tracking-widest uppercase"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-            >
-              &lt; Coffee as a Service &gt;
-            </motion.p>
-          </motion.div>
-        </div>
-
+    <div className="relative h-full bg-gradient-to-br from-gray-950 via-gray-900 to-black text-white px-4">
+      {/* HERO */}
+      <div className="flex flex-col items-center justify-center pt-16 sm:pt-24 pb-16 text-center">
         <motion.div
-          className="mt-12"
+          className="flex flex-col items-center gap-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
         >
- 
+          {/* LOGO */}
+          <img
+            src={logo}
+            alt="Espresso Logo"
+            className="w-32 sm:w-40 md:w-48 opacity-90"
+          />
+
+          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight">
+            ESPRESSO<span className="text-emerald-400">.NET</span>
+          </h1>
+
+          <p className="text-emerald-400 text-sm sm:text-lg font-mono tracking-widest uppercase">
+            &lt; Coffee as a Service &gt;
+          </p>
+
+          <p className="max-w-xl text-gray-400 text-sm sm:text-base leading-relaxed">
+            Explora nuestro menú de café o deja que un asistente inteligente te
+            recomiende la bebida perfecta según tus gustos.
+          </p>
+        </motion.div>
+
+        {/* BOTONES */}
+        <motion.div
+          className="mt-8 flex flex-col sm:flex-row gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          {/* Assistant */}
           <motion.button
             onClick={startAssistant}
-            whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255, 255, 255, 0.2)" }}
-            whileTap={{ scale: 0.96 }}
-            className="
-              mx-auto
-              flex items-center
-              justify-center
-              gap-4
-              backdrop-blur-md
-              bg-white/10
-              px-10 py-6
-              rounded-2xl
-              text-white
-              border border-white/20
-              hover:bg-white/20
-              hover:border-white/40
-              transition-all
-              group
-              "
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-4 px-8 py-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
           >
-            <span className="text-4xl group-hover:rotate-12 transition-transform">🤖</span> 
-            <div className="text-left flex flex-col justify-center">
-              <p className="text-[10px] sm:text-xs text-emerald-400 font-mono leading-none mb-1">init_assistant.sh</p>
-              <p className="text-xl font-extrabold leading-none">
-                Asistente Virtual
+            <Sparkles className="w-5 h-5 text-emerald-400 transition group-hover:scale-110 group-hover:drop-shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
+
+            <div className="text-left">
+              <p className="text-xs text-emerald-400 font-mono">
+                init_assistant.sh
               </p>
+              <p className="font-semibold">Asistente IA</p>
             </div>
           </motion.button>
 
-          <p className="text-gray-400 mt-4 text-sm font-mono">
-            Analizando perfil de usuario para optimizar workflow...
-          </p>
+          {/* Menu */}
+          <motion.button
+            onClick={goMenu}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-4 px-8 py-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition"
+          >
+            <Coffee className="w-5 h-5 text-emerald-400 transition group-hover:scale-110 group-hover:drop-shadow-[0_0_6px_rgba(16,185,129,0.6)]" />
+
+            <div className="text-left">
+              <p className="text-xs text-emerald-400 font-mono">
+                view_menu.json
+              </p>
+              <p className="font-semibold">Ver Menú</p>
+            </div>
+          </motion.button>
         </motion.div>
+      </div>
+
+      {/* FEATURES */}
+      <div className="max-w-4xl mx-auto mt-6 sm:mt-8 py-20 grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+        <div className="p-5 rounded-xl border border-white/10 bg-white/5">
+          <div className="flex items-center gap-2 mb-2">
+            <Coffee className="w-4 h-4 text-emerald-400" />
+            <h3 className="font-semibold">Menú dinámico</h3>
+          </div>
+          <p className="text-gray-400 text-sm">
+            Descubre bebidas clásicas y especiales con descripciones claras.
+          </p>
+        </div>
+
+        <div className="p-5 rounded-xl border border-white/10 bg-white/5">
+          <div className="flex items-center gap-2 mb-2">
+            <Bot className="w-4 h-4 text-emerald-400" />
+            <h3 className="font-semibold">Recomendaciones IA</h3>
+          </div>
+          <p className="text-gray-400 text-sm">
+            El asistente analiza tus gustos y sugiere opciones ideales.
+          </p>
+        </div>
+
+        <div className="p-5 rounded-xl border border-white/10 bg-white/5">
+          <div className="flex items-center gap-2 mb-2">
+            <Globe className="w-4 h-4 text-emerald-400" />
+            <h3 className="font-semibold">Cultura del café</h3>
+          </div>
+          <p className="text-gray-400 text-sm">
+            Pregunta sobre granos, métodos y todo el mundo del café.
+          </p>
+        </div>
       </div>
     </div>
   );

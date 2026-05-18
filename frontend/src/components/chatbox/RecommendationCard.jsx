@@ -1,3 +1,4 @@
+// frontend\src\components\chatbox\RecommendationCard.jsx
 import { motion } from "framer-motion";
 import coffees from "../../data/domain/coffees";
 import OptionButton from "../common/OptionButton";

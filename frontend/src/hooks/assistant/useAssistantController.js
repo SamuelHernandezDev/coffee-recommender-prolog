@@ -1,41 +1,62 @@
 // frontend\src\hooks\assistant\useAssistantController.js
-import { useEffect, useState } from "react";
-import { useUserAnswers } from "../../context/UserAnswersContext";
+import { useEffect, useState, useRef } from 'react';
+import { introScript } from '../../scripts/conversation/introScript';
+import { runScript } from '../../utils/chat/runScript';
+import { useUserAnswers } from '../../context/UserAnswersContext';
 
-import useConversationEngine from "../conversation/useConversationEngine";
-import useChatFlow from "../flow/useChatFlow";
-import useAssistantMessages from "./useAssistantMessages";
-import useAssistantConversationFlow from "./useAssistantConversationFlow";
-import useRecommendationEngine from "../recommendation/useRecommendationEngine";
-import useAssistantModeManager from "./useAssistantModeManager"; 
+import useKnowledgeEngine from '../conversation/knowledge/useKnowledgeEngine';
+import useRecommenderEngine from '../conversation/recommender/useRecommenderEngine';
+
+import useChatFlow from '../flow/useChatFlow';
+import useAssistantMessages from './useAssistantMessages';
+import useRecommendationEngine from '../recommendation/useRecommendationEngine';
+import useAssistantModeManager from './useAssistantModeManager';
 
 export default function useAssistantController() {
+  // -----------------------
+  // Intro
+  // -----------------------
+  const [introDone, setIntroDone] = useState(false);
 
-  const {
-    currentQuestion,
-    finished,
-    submitAnswer,
-    answers,
-    level,
-    currentQuestionIndex
-  } = useChatFlow();
+  async function runInitialIntro() {
+    if (introDone) return;
 
-    const {
-      mode,
-      setAssistantMode,
-      resetMode
-    } = useAssistantModeManager();
+    await runScript({
+      script: introScript,
+      sendAssistantMessage,
+      sendOptions,
+      clearTyping,
+      timing: CHAT_TIMING,
+    });
 
-  const {
-    recommendation,
-    generateRecommendation,
-  } = useRecommendationEngine();
+    setIntroDone(true);
+  }
 
-  const {
-    restartQuestionnaire,
-    resetFlow
-  } = useUserAnswers();
+  // -----------------------
+  // Chat Flow (data)
+  // -----------------------
+  const { currentQuestion, finished, submitAnswer, answers, level } =
+    useChatFlow();
 
+  // -----------------------
+  // Mode
+  // -----------------------
+  const { mode, setAssistantMode, resetMode } = useAssistantModeManager();
+
+  // -----------------------
+  // Recommendation result
+  // -----------------------
+  const { recommendation, generateRecommendation } = useRecommendationEngine();
+  const [showRecommendationCard, setShowRecommendationCard] = useState(false);
+
+  // -----------------------
+  // User answers
+  // -----------------------
+  const { restartQuestionnaire, resetFlow } = useUserAnswers();
+
+  // -----------------------
+  // Chat UI
+  // -----------------------
   const {
     messages,
     sendAssistantMessage,
@@ -44,140 +65,198 @@ export default function useAssistantController() {
     clearTyping,
     clearOptions,
     resetMessages,
-    CHAT_TIMING
+    CHAT_TIMING,
   } = useAssistantMessages();
 
-  const flow = useAssistantConversationFlow({
+  // -----------------------
+  // Engines
+  // -----------------------
+  const knowledge = useKnowledgeEngine({
     sendAssistantMessage,
     sendOptions,
     clearTyping,
-    timing: CHAT_TIMING
+    timing: CHAT_TIMING,
   });
-  
 
-  const { step, runStep, next, finish, reset } = useConversationEngine({ flow });
+  const recommender = useRecommenderEngine({
+    sendAssistantMessage,
+    sendOptions,
+    clearTyping,
+    timing: CHAT_TIMING,
+    getCurrentQuestion: () => currentQuestion,
+  });
 
+  // -----------------------
+  // UI State
+  // -----------------------
   const [isChatCollapsed, setIsChatCollapsed] = useState(false);
 
   // -----------------------
-  // Debug logs 
+  // Run Intro
   // -----------------------
   useEffect(() => {
-    console.log("[ENGINE STEP]:", step);
-    console.log("[MODE]:", mode);
-    console.log("[QUESTION]:", currentQuestion?.id);
-    console.log("[INDEX]:", currentQuestionIndex);
-  }, [step, mode, currentQuestion, currentQuestionIndex]);
+    runInitialIntro();
+  }, []);
 
   // -----------------------
-  // Conversation 
+  // Flujo Inicial
   // -----------------------
+  const lastAssistantQuestionId = useRef(null);
 
   useEffect(() => {
-
-    if (finished) {
-      finish();
-      return;
-    }
-
+    if (!introDone) return;
     if (!currentQuestion) return;
-  
-    runStep({
-      currentQuestion
-    });
-  
-  }, [step, currentQuestion, finished]);
+
+    const isAssistantQuestion = ['mode', 'level'].includes(currentQuestion.id);
+
+    if (!isAssistantQuestion) return;
+
+    // 🚨 EVITA DUPLICADOS
+    if (lastAssistantQuestionId.current === currentQuestion.id) return;
+
+    lastAssistantQuestionId.current = currentQuestion.id;
+
+    const run = async () => {
+      await sendAssistantMessage(currentQuestion.question);
+
+      sendOptions(
+        currentQuestion.options.map((op) => ({
+          label: op.text,
+          value: op.value,
+        }))
+      );
+    };
+
+    run();
+  }, [introDone, currentQuestion]);
 
   // -----------------------
-  // Recommendation
+  // Run recommender flow
   // -----------------------
-
   useEffect(() => {
+    if (mode !== 'recommendation') return;
+    if (!currentQuestion) return;
 
-    if (!finished || mode !== "recommendation") return;
-    if (!answers || answers.length === 0) return;
+    recommender.run();
+  }, [mode, currentQuestion]);
 
-    generateRecommendation(answers);
+  // -----------------------
+  // Generate recommendation
+  // -----------------------
+  useEffect(() => {
+    const runRecommendation = async () => {
+      if (!finished || mode !== 'recommendation') return;
+      if (!answers || answers.length === 0) return;
 
+      await sendAssistantMessage('Estoy analizando tus preferencias ☕');
+
+      generateRecommendation(answers);
+    };
+
+    runRecommendation();
   }, [finished, answers, mode]);
 
   // -----------------------
   // Collapse chat
   // -----------------------
-
   useEffect(() => {
+    if (mode !== 'recommendation' || !recommendation) return;
 
-    if (finished) {
-      setTimeout(() => setIsChatCollapsed(true), 150);
-    }
+    const runTransition = async () => {
+      setIsChatCollapsed(true);
 
-  }, [finished]);
+      await new Promise((resolve) => setTimeout(resolve, 450));
 
-  // -----------------------
-  // Helpers
-  // -----------------------
-  function handleModeSelection(questionId, value) {
-    if (questionId === "mode") {
-      setAssistantMode(value);
-    }
-  }
+      setShowRecommendationCard(true);
+    };
+
+    runTransition();
+  }, [recommendation, mode]);
 
   // -----------------------
   // Handlers
   // -----------------------
 
   function handleSelect(value, label) {
-
     if (!currentQuestion) return;
-  
-    console.log("USER SELECTED:", {
-      questionId: currentQuestion.id,
-      value,
-      label
-    });
-  
+
+    const isModeQuestion = currentQuestion.id === 'mode';
+
     clearOptions();
     sendUserMessage(label);
 
-    handleModeSelection(currentQuestion.id, value);
-
     submitAnswer({
       value,
-      label
+      label,
     });
 
-    next();
-  
-    console.log("NEXT STEP TRIGGERED");  
+    // -----------------------
+    // MODE SELECTION
+    // -----------------------
+    if (isModeQuestion) {
+      setAssistantMode(value);
+
+      if (value === 'knowledge') {
+        knowledge.runIntro();
+        return;
+      }
+
+      if (value === 'recommendation') {
+        recommender.runIntro();
+        return;
+      }
+    }
+
+    // -----------------------
+    // CONTINUE RECOMMENDER FLOW
+    // -----------------------
+
+    if (!isModeQuestion && mode === 'recommendation') {
+      recommender.next();
+    }
+  }
+
+  function handleUserInput(text) {
+    if (!text.trim()) return;
+
+    sendUserMessage(text);
+
+    if (mode === 'knowledge') {
+      knowledge.ask(text);
+    }
   }
 
   function handleRestart() {
-
     restartQuestionnaire();
 
     resetMessages();
 
-    flow.resetFlow();
-
-    reset();
+    knowledge.reset();
+    recommender.reset();
 
     resetMode();
 
+    setShowRecommendationCard(false);
+
+    setIsChatCollapsed(false);
   }
 
   function toggleCollapse() {
-    setIsChatCollapsed(prev => !prev);
+    setIsChatCollapsed((prev) => !prev);
   }
 
   return {
     messages,
     handleSelect,
+    handleUserInput,
     handleRestart,
     toggleCollapse,
     isChatCollapsed,
     recommendation,
+    showRecommendationCard,
     finished,
     level,
-    resetFlow
+    resetFlow,
+    mode,
   };
 }
